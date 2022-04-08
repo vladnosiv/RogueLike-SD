@@ -2,9 +2,9 @@ package model
 
 enum class TileType {
     FLOOR {
-          override fun isPassable(): Boolean {
-              return true
-          }
+        override fun isPassable(): Boolean {
+            return true
+        }
     },
     WALL {
         override fun isPassable(): Boolean {
