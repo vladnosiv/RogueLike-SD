@@ -1,5 +1,3 @@
 package model
 
-class MainCharacter(position: Position, hp: Int) : Actor(position, hp) {
-    var expPoints: Int = 0
-}
+class MainCharacter(position: Position, hp: Int, var exp: Int) : Actor(position, hp)
