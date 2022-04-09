@@ -1,18 +1,22 @@
 package model
 
-class Environment(generator: MapGenerator, config: MapGeneratorConfig) {
-    var map = generator.genMap(config)
-    var mainCharacter = MainCharacter(Position(0, 0), 100)
+class Environment(
+    generator: MapGenerator,
+    mapGeneratorConfig: MapGeneratorConfig,
+    mainCharacterConfig: MainCharacterConfig
+) {
+    var map = generator.genMap(mapGeneratorConfig)
+    var mainCharacter = MainCharacter(mainCharacterConfig.position, mainCharacterConfig.hp, mainCharacterConfig.exp)
     val mobs = mutableListOf<Mob>()
     val timer = Timer()
 
     fun canMainCharacterMove(move: Move): Boolean {
-        return map.isPositionOnField(Position(mainCharacter.position, move))
+        return map.isPositionOnField(mainCharacter.position + move)
     }
 
     fun mainCharacterMove(move: Move) {
         assert(canMainCharacterMove(move))
-        mainCharacter.position = Position(mainCharacter.position, move)
+        mainCharacter.position += move
     }
 
     fun tick() {
