@@ -3,6 +3,7 @@ package model
 import java.io.BufferedReader
 import kotlin.streams.toList
 
+// a class that loads a field from a text file
 class MapLoader(levelName: String) : MapGenerator {
     private val field: List<List<Tile>>
 

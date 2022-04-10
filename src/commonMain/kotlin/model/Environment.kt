@@ -1,5 +1,6 @@
 package model
 
+// the class that stores the environment
 class Environment(
     generator: MapGenerator,
     mainCharacterConfig: MainCharacterConfig
@@ -13,11 +14,13 @@ class Environment(
         map.getTile(mainCharacterConfig.position).actor = mainCharacter
     }
 
+    // returns true if the main character can move in the move direction, otherwise false
     fun canMainCharacterMove(move: Move): Boolean {
         val newPosition = mainCharacter.position + move
         return map.isPositionOnField(newPosition) && map.getTile(newPosition).type.isPassable()
     }
 
+    // moves main character
     fun mainCharacterMove(move: Move) {
         assert(canMainCharacterMove(move))
         map.getTile(mainCharacter.position).actor = null
@@ -25,6 +28,7 @@ class Environment(
         map.getTile(mainCharacter.position).actor = mainCharacter
     }
 
+    // going to the next tick
     fun tick() {
         timer.tick()
     }

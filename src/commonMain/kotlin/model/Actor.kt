@@ -1,4 +1,4 @@
 package model
 
-open class Actor(var position: Position, var hp: Int) {
-}
+// base class for storing information about actors
+open class Actor(var position: Position, var hp: Int)
