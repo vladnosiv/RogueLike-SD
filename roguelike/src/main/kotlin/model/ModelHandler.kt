@@ -18,6 +18,6 @@ class ModelHandler {
         val actionsFromLastTick = actions
         actions = mutableListOf()
         environment.tick()
-        return actionsFromLastTick // TODO("Ensure one ActorMoved action on list")
+        return actionsFromLastTick.reversed().distinctBy { action -> action.javaClass } // TODO("Ensure one ActorMoved action on list")
     }
 }
