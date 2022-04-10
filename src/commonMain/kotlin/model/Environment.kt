@@ -9,13 +9,20 @@ class Environment(
     val mobs = mutableListOf<Mob>()
     val timer = Timer()
 
+    init {
+        map.getTile(mainCharacterConfig.position).actor = mainCharacter
+    }
+
     fun canMainCharacterMove(move: Move): Boolean {
-        return map.isPositionOnField(mainCharacter.position + move)
+        val newPosition = mainCharacter.position + move
+        return map.isPositionOnField(newPosition) && map.getTile(newPosition).type.isPassable()
     }
 
     fun mainCharacterMove(move: Move) {
         assert(canMainCharacterMove(move))
+        map.getTile(mainCharacter.position).actor = null
         mainCharacter.position += move
+        map.getTile(mainCharacter.position).actor = mainCharacter
     }
 
     fun tick() {
