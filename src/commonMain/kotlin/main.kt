@@ -14,7 +14,6 @@ suspend fun main() = Korge(width = tileSize * mapWidth, height = tileSize * mapH
     val mapContainer = camera.container()
     val map = view.Map(mapContainer, mapWidth, mapHeight)
     val hero = view.Hero(mapContainer)
-
     val posX = mapWidth / 2
     val posY = mapHeight / 2
     hero.setPosition(posX, posY)
@@ -24,5 +23,9 @@ suspend fun main() = Korge(width = tileSize * mapWidth, height = tileSize * mapH
         down(Key.LEFT) { hero.changePosition(-1, 0) }
         down(Key.UP) { hero.changePosition(0, -1) }
         down(Key.DOWN) { hero.changePosition(0, 1) }
+        down(Key.D) { hero.changePosition(1, 0) }
+        down(Key.A) { hero.changePosition(-1, 0) }
+        down(Key.W) { hero.changePosition(0, -1) }
+        down(Key.S) { hero.changePosition(0, 1) }
     }
 }

@@ -54,4 +54,10 @@ object TileAnimation {
             val run = getAnimation("ogre_run_anim")
         }
     }
+
+    object Weapons {
+        object Knife {
+            val sprite = getAnimation("weapon_knife")
+        }
+    }
 }
