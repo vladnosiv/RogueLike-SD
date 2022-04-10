@@ -5,6 +5,10 @@ import com.soywiz.korge.view.Container
 import com.soywiz.korge.view.position
 import com.soywiz.korge.view.sprite
 
+/**
+ * Хранит класс игрока
+ * Позволяет двигать спрайт персонажа
+ */
 class Hero(container: Container) {
     private val heroSprite = container.sprite(TileAnimation.Hero.idle).also {
         it.playAnimationLooped(spriteDisplayTime = 100.milliseconds)

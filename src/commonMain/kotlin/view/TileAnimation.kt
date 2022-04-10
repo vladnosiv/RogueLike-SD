@@ -5,6 +5,9 @@ import com.soywiz.korim.format.readBitmap
 import com.soywiz.korio.file.std.resourcesVfs
 import kotlinx.coroutines.runBlocking
 
+/**
+ * Объект для загрузки текстур
+ */
 object TileAnimation {
 
     private val tileSet = runBlocking {

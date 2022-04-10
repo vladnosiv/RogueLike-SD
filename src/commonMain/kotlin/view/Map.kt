@@ -5,6 +5,10 @@ import com.soywiz.korge.view.position
 import com.soywiz.korge.view.sprite
 
 
+/**
+ * Класс карты
+ * Генерирует простую карту и создает спрайты по этой карте
+ */
 class Map(container: Container, width: Int, height: Int) {
     init {
         val tiles = generateMap(width, height)
