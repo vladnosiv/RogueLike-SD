@@ -21,6 +21,10 @@ class Hero(container: Container) {
     fun changePosition(dx: Int, dy: Int) {
         x += dx
         y += dy
+        if (x > 30) x = 30
+        if (x < 1) x = 1
+        if (y > 29) y = 29
+        if (y < 0) y = 0
         heroSprite.position(16 * x, 16 * y)
     }
 }
