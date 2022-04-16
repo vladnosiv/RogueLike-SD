@@ -3,6 +3,7 @@ package view
 import com.soywiz.korge.view.Container
 import com.soywiz.korge.view.position
 import com.soywiz.korge.view.sprite
+import view.sprites.TileAnimation
 
 
 class Map(container: Container, width: Int, height: Int) {

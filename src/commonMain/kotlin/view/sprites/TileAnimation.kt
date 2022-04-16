@@ -1,4 +1,4 @@
-package view
+package view.sprites
 
 import com.soywiz.korge.view.SpriteAnimation
 import com.soywiz.korim.format.readBitmap
@@ -42,22 +42,20 @@ object TileAnimation {
         val wall = getAnimation("wall_mid")
     }
 
-    object Hero {
-        val idle = getAnimation("knight_f_idle_anim")
-        val run = getAnimation("knight_f_run_anim")
-        val hit = getAnimation("knight_f_hit_anim")
-    }
+    object Characters {
+        val Knight = CharacterSprite(
+            getAnimation("knight_f_idle_anim"),
+            getAnimation("knight_f_run_anim")
+        )
 
-    object Mobs {
-        object Ogre {
-            val idle = getAnimation("ogre_idle_anim")
-            val run = getAnimation("ogre_run_anim")
-        }
+        val Wizard = CharacterSprite(
+            getAnimation("wizzard_f_idle_anim"),
+            getAnimation("wizzard_f_run_anim")
+        )
     }
 
     object Weapons {
-        object Knife {
-            val sprite = getAnimation("weapon_knife")
-        }
+        val RegularSword = Weapon(getAnimation("weapon_regular_sword"))
+        val Hammer = Weapon(getAnimation("weapon_hammer"))
     }
 }

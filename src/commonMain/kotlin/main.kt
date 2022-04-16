@@ -3,6 +3,7 @@ import com.soywiz.korev.Key
 import com.soywiz.korge.*
 import com.soywiz.korge.input.keys
 import com.soywiz.korge.view.*
+import view.sprites.TileAnimation
 
 val tileSize = 16
 val mapWidth = 32
@@ -12,8 +13,8 @@ val mapHeight = 32
 suspend fun main() = Korge(width = tileSize * mapWidth, height = tileSize * mapHeight) {
     val camera = this.camera()
     val mapContainer = camera.container()
-    val map = view.Map(mapContainer, mapWidth, mapHeight)
-    val hero = view.Hero(mapContainer)
+    view.Map(mapContainer, mapWidth, mapHeight)
+    val hero = view.Character(mapContainer, TileAnimation.Characters.Knight, TileAnimation.Weapons.RegularSword)
     val posX = mapWidth / 2
     val posY = mapHeight / 2
     hero.setPosition(posX, posY)
@@ -27,5 +28,6 @@ suspend fun main() = Korge(width = tileSize * mapWidth, height = tileSize * mapH
         down(Key.A) { hero.changePosition(-1, 0) }
         down(Key.W) { hero.changePosition(0, -1) }
         down(Key.S) { hero.changePosition(0, 1) }
+        down(Key.SPACE) { hero.hit() }
     }
 }
