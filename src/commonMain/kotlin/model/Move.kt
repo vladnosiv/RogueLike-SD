@@ -1,5 +1,6 @@
 package model
 
+// enum for moves
 enum class Move {
     UP {
         override val deltaY = -1

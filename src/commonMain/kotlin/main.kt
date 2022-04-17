@@ -1,45 +1,33 @@
-
 import com.soywiz.korev.Key
 import com.soywiz.korge.*
 import com.soywiz.korge.input.keys
 import com.soywiz.korge.view.*
-import view.sprites.TileAnimation
+import kotlinx.coroutines.*
 
-const val tileSize = 16
-const val mapWidth = 32
-const val mapHeight = 32
+val tileSize = 16
+val mapWidth = 32
+val mapHeight = 32
 
 
 suspend fun main() = Korge(width = tileSize * mapWidth, height = tileSize * mapHeight) {
-    val camera = this.camera()
-    val mapContainer = camera.container()
-    view.Map(mapContainer, mapWidth, mapHeight)
-
-    val ui = view.StatusBar(mapContainer) // usage demonstration
-    ui.displayHP(5, 10)
-    ui.setInventorySize(5)
-    ui.addItem(TileAnimation.Weapons.RegularSword.sprite)
-
-    val hero = view.Character(mapContainer, TileAnimation.Characters.Knight, TileAnimation.Weapons.RegularSword).also {
-        it.setPosition(mapWidth / 2, mapHeight / 2)
-    }
-    val passiveMob = view.Character(mapContainer, TileAnimation.Characters.Wizard, TileAnimation.Weapons.MagicStick).also {
-        it.setPosition(mapWidth - 4, mapWidth - 4)
-    }
-    val aggressiveMob = view.Character(mapContainer, TileAnimation.Characters.Necromancer).also {
-        it.setPosition(mapWidth - 5, mapHeight - 5)
-    }
+    val camera          = this.camera()
+    val ui              = view.UI(camera)
+    val modelHandler    = model.ModelHandler()
+    val keyboardHandler = controller.KeyboardHandler()
+    val game            = controller.Game(ui, modelHandler, keyboardHandler)
 
     this.keys {
-        down(Key.RIGHT) { hero.changePosition(1, 0) }
-        down(Key.LEFT) { hero.changePosition(-1, 0) }
-        down(Key.UP) { hero.changePosition(0, -1) }
-        down(Key.DOWN) { hero.changePosition(0, 1) }
-        down(Key.D) { hero.changePosition(1, 0) }
-        down(Key.A) { hero.changePosition(-1, 0) }
-        down(Key.W) { hero.changePosition(0, -1) }
-        down(Key.S) { hero.changePosition(0, 1) }
-        down(Key.SPACE) { hero.hit() }
-        down(Key.M) { hero.flipX() }
+        down(Key.RIGHT) { keyboardHandler.onCommand(controller.Command.MOVE_RIGHT) }
+        down(Key.LEFT)  { keyboardHandler.onCommand(controller.Command.MOVE_LEFT) }
+        down(Key.UP)    { keyboardHandler.onCommand(controller.Command.MOVE_UP) }
+        down(Key.DOWN)  { keyboardHandler.onCommand(controller.Command.MOVE_DOWN) }
     }
+
+    val job = launch {
+        while (true) {
+            game.tick()
+            delay(16)
+        }
+    }
+    job.join()
 }

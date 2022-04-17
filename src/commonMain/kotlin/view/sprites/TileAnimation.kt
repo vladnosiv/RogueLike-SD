@@ -6,6 +6,9 @@ import com.soywiz.korio.file.std.resourcesVfs
 import kotlinx.coroutines.runBlocking
 import kotlin.random.Random
 
+/**
+ * Объект для загрузки текстур
+ */
 object TileAnimation {
 
     private val tileSet = runBlocking {

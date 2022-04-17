@@ -1,5 +1,6 @@
 package model
 
+// enum for different tile types
 enum class TileType {
     FLOOR {
         override fun isPassable(): Boolean {
