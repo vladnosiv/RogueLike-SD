@@ -1,11 +1,12 @@
 package view
 
 import com.soywiz.korge.view.SpriteAnimation
+import view.sprites.TileAnimation
 
 
 enum class TileType {
     FLOOR {
-        override fun animatedSprite() = TileAnimation.Map.floor
+        override fun animatedSprite() = TileAnimation.Map.getFloor()
     },
 
     WALL {
