@@ -5,7 +5,7 @@ import com.soywiz.korma.geom.degrees
 import view.sprites.TileAnimation
 
 
-class UI(
+class StatusBar(
     container: Container
 ) {
     private var inventoryOffset = 2

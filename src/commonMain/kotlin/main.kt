@@ -15,7 +15,7 @@ suspend fun main() = Korge(width = tileSize * mapWidth, height = tileSize * mapH
     val mapContainer = camera.container()
     view.Map(mapContainer, mapWidth, mapHeight)
 
-    val ui = view.UI(mapContainer) // usage demonstration
+    val ui = view.StatusBar(mapContainer) // usage demonstration
     ui.displayHP(5, 10)
     ui.setInventorySize(5)
     ui.addItem(TileAnimation.Weapons.RegularSword.sprite)
@@ -40,5 +40,6 @@ suspend fun main() = Korge(width = tileSize * mapWidth, height = tileSize * mapH
         down(Key.W) { hero.changePosition(0, -1) }
         down(Key.S) { hero.changePosition(0, 1) }
         down(Key.SPACE) { hero.hit() }
+        down(Key.M) { hero.flipX() }
     }
 }
