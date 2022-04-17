@@ -1,9 +1,10 @@
-package view
+package view.sprites
 
 import com.soywiz.korge.view.SpriteAnimation
 import com.soywiz.korim.format.readBitmap
 import com.soywiz.korio.file.std.resourcesVfs
 import kotlinx.coroutines.runBlocking
+import kotlin.random.Random
 
 /**
  * Объект для загрузки текстур
@@ -40,21 +41,45 @@ object TileAnimation {
         columns = spriteNameToPosition[name]!!.columns
     )
 
+    object UI {
+        val FullHeart = getAnimation("ui_heart_full")
+        val HalfHeart = getAnimation("ui_heart_half")
+        val EmptyHeart = getAnimation("ui_heart_empty")
+
+        val Crate = getAnimation("crate")
+        val RedButtonOff = getAnimation("red_button_off")
+    }
+
     object Map {
-        val floor = getAnimation("floor_1")
+        fun getFloor() = getAnimation("floor_${Random.nextInt(1, 4)}")
         val wall = getAnimation("wall_mid")
     }
 
-    object Hero {
-        val idle = getAnimation("knight_f_idle_anim")
-        val run = getAnimation("knight_f_run_anim")
-        val hit = getAnimation("knight_f_hit_anim")
+    object Characters {
+        val Knight = CharacterSprite(
+            getAnimation("knight_f_idle_anim"),
+            getAnimation("knight_f_run_anim")
+        )
+
+        val Wizard = CharacterSprite(
+            getAnimation("wizzard_f_idle_anim"),
+            getAnimation("wizzard_f_run_anim")
+        )
+
+        val Zombie = CharacterSprite(
+            getAnimation("zombie_idle_anim"),
+            getAnimation("zombie_run_anim"),
+        )
+
+        val Necromancer = CharacterSprite(
+            getAnimation("necromancer_idle_anim"),
+            getAnimation("necromancer_run_anim"),
+        )
     }
 
-    object Mobs {
-        object Ogre {
-            val idle = getAnimation("ogre_idle_anim")
-            val run = getAnimation("ogre_run_anim")
-        }
+    object Weapons {
+        val RegularSword = Weapon(getAnimation("weapon_regular_sword"))
+        val Hammer = Weapon(getAnimation("weapon_hammer"))
+        val MagicStick = Weapon(getAnimation("weapon_red_magic_staff"))
     }
 }

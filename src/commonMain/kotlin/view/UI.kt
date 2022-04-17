@@ -1,30 +1,33 @@
 package view
 
 import com.soywiz.korge.view.Camera
+import com.soywiz.korge.view.container
+import view.sprites.TileAnimation
 
 
 class UI(camera: Camera) {
 
-    private var mapContainer = camera
+    private val mapContainer = camera.container()
+    private val actorsContainer = camera.container()
 
-    interface EventHandler {}
+    interface EventHandler
 
-    interface ActorEventHandler: UI.EventHandler {
-        abstract fun move(dx: Int, dy: Int)
-        abstract fun place(x: Int, y: Int)
+    interface ActorEventHandler: EventHandler {
+        suspend fun move(dx: Int, dy: Int)
+        fun place(x: Int, y: Int)
     }
 
-    interface MapEventHandler: UI.EventHandler {
-        abstract fun fill(field: List<List<Tile>>)
+    interface MapEventHandler: EventHandler {
+        fun fill(field: List<List<Tile>>)
     }
 
-    fun createActorRepr() = object: UI.ActorEventHandler {
-        val actor = Hero(mapContainer)
-        override fun move(dx: Int, dy: Int) = actor.changePosition(dx, dy)
+    fun createActorRepr() = object: ActorEventHandler {
+        val actor = Character(actorsContainer, TileAnimation.Characters.Knight, TileAnimation.Weapons.RegularSword)
+        override suspend fun move(dx: Int, dy: Int) = actor.changePosition(dx, dy)
         override fun place(x: Int, y: Int) = actor.setPosition(x, y)
     }
 
-    fun createMapRepr() = object: UI.MapEventHandler {
+    fun createMapRepr() = object: MapEventHandler {
         val map = Map(mapContainer)
         override fun fill(field: List<List<Tile>>) = map.draw(field)
     }
