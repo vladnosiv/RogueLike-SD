@@ -25,7 +25,7 @@ class Map(container: Container, width: Int, height: Int) {
     private fun generateMap(width: Int, height: Int): List<List<Tile>> {
         return List(width) { x -> List(height) { y -> when {
             x == 0 || x == width - 1 || y == 0 || y == height - 1 -> Tile(x, y, TileAnimation.Map.wall)
-            else -> Tile(x, y, TileAnimation.Map.floor)
+            else -> Tile(x, y, TileAnimation.Map.getFloor())
         } } }
     }
 }

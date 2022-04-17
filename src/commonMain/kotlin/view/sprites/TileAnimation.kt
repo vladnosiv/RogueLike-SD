@@ -4,6 +4,7 @@ import com.soywiz.korge.view.SpriteAnimation
 import com.soywiz.korim.format.readBitmap
 import com.soywiz.korio.file.std.resourcesVfs
 import kotlinx.coroutines.runBlocking
+import kotlin.random.Random
 
 object TileAnimation {
 
@@ -38,7 +39,7 @@ object TileAnimation {
     )
 
     object Map {
-        val floor = getAnimation("floor_1")
+        fun getFloor() = getAnimation("floor_${Random.nextInt(1, 4)}")
         val wall = getAnimation("wall_mid")
     }
 
@@ -52,10 +53,21 @@ object TileAnimation {
             getAnimation("wizzard_f_idle_anim"),
             getAnimation("wizzard_f_run_anim")
         )
+
+        val Zombie = CharacterSprite(
+            getAnimation("zombie_idle_anim"),
+            getAnimation("zombie_run_anim"),
+        )
+
+        val Necromancer = CharacterSprite(
+            getAnimation("necromancer_idle_anim"),
+            getAnimation("necromancer_run_anim"),
+        )
     }
 
     object Weapons {
         val RegularSword = Weapon(getAnimation("weapon_regular_sword"))
         val Hammer = Weapon(getAnimation("weapon_hammer"))
+        val MagicStick = Weapon(getAnimation("weapon_red_magic_staff"))
     }
 }
