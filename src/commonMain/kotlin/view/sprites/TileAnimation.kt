@@ -38,6 +38,12 @@ object TileAnimation {
         columns = spriteNameToPosition[name]!!.columns
     )
 
+    object UI {
+        val FullHeart = getAnimation("ui_heart_full")
+        val HalfHeart = getAnimation("ui_heart_half")
+        val EmptyHeart = getAnimation("ui_heart_empty")
+    }
+
     object Map {
         fun getFloor() = getAnimation("floor_${Random.nextInt(1, 4)}")
         val wall = getAnimation("wall_mid")
