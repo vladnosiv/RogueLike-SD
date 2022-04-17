@@ -9,6 +9,8 @@ class UI(camera: Camera) {
 
     private val mapContainer = camera.container()
     private val actorsContainer = camera.container()
+    private val statusBarContainer = camera.container()
+    private val statusBar = StatusBar(statusBarContainer)
 
     interface EventHandler
 
@@ -30,5 +32,9 @@ class UI(camera: Camera) {
     fun createMapRepr() = object: MapEventHandler {
         val map = Map(mapContainer)
         override fun fill(field: List<List<Tile>>) = map.draw(field)
+    }
+
+    fun displayHp(hp: Int, maxHp: Int) {
+        statusBar.displayHP(hp, maxHp)
     }
 }
