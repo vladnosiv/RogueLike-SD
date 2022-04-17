@@ -14,8 +14,12 @@ suspend fun main() = Korge(width = tileSize * mapWidth, height = tileSize * mapH
     val camera = this.camera()
     val mapContainer = camera.container()
     view.Map(mapContainer, mapWidth, mapHeight)
-    val ui = view.UI(mapContainer)
-    ui.displayHP(20, 20)
+
+    val ui = view.UI(mapContainer) // usage demonstration
+    ui.displayHP(5, 10)
+    ui.setInventorySize(5)
+    ui.addItem(TileAnimation.Weapons.RegularSword.sprite)
+
     val hero = view.Character(mapContainer, TileAnimation.Characters.Knight, TileAnimation.Weapons.RegularSword).also {
         it.setPosition(mapWidth / 2, mapHeight / 2)
     }

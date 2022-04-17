@@ -42,6 +42,9 @@ object TileAnimation {
         val FullHeart = getAnimation("ui_heart_full")
         val HalfHeart = getAnimation("ui_heart_half")
         val EmptyHeart = getAnimation("ui_heart_empty")
+
+        val Crate = getAnimation("crate")
+        val RedButtonOff = getAnimation("red_button_off")
     }
 
     object Map {
