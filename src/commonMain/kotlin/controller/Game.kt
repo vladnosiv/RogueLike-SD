@@ -30,5 +30,7 @@ class Game(ui: view.UI, val logic: model.ModelHandler, val commands: KeyboardHan
                 })
             }
         }
+
+        commands.clear()
     }
 }
