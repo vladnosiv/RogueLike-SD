@@ -1,6 +1,7 @@
 package model
 
 // class stores information about tile
-data class Tile(var type: TileType) {
+// TODO: replace x, y with Position(x, y)
+data class Tile(var type: TileType, var x: Int, var y: Int) {
     var actor: Actor? = null
 }

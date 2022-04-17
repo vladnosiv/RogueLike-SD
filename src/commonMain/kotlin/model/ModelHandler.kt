@@ -3,8 +3,8 @@ package model
 // class that stores the model
 class ModelHandler {
     private val environment =
-        Environment(FloorMapGenerator(MapGeneratorConfig(10, 10)), MainCharacterConfig(Position(0, 0), 100, 0))
-    private var actions = mutableListOf<Action>()
+        Environment(FloorMapGenerator(MapGeneratorConfig(32, 32)), MainCharacterConfig(Position(16, 16), 100, 0))
+    private var actions = mutableListOf<Action>(MapChanged(FloorMapGenerator(MapGeneratorConfig(32, 32)).genMap().field))
 
     // handles move action
     fun onMove(move: Move) {

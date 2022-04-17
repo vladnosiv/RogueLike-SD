@@ -1,8 +1,8 @@
-
 import com.soywiz.korev.Key
 import com.soywiz.korge.*
 import com.soywiz.korge.input.keys
 import com.soywiz.korge.view.*
+import kotlinx.coroutines.*
 
 val tileSize = 16
 val mapWidth = 32
@@ -10,19 +10,24 @@ val mapHeight = 32
 
 
 suspend fun main() = Korge(width = tileSize * mapWidth, height = tileSize * mapHeight) {
-    val camera = this.camera()
-    val mapContainer = camera.container()
-    val map = view.Map(mapContainer, mapWidth, mapHeight)
-    val hero = view.Hero(mapContainer)
-
-    val posX = mapWidth / 2
-    val posY = mapHeight / 2
-    hero.setPosition(posX, posY)
+    val camera          = this.camera()
+    val ui              = view.UI(camera)
+    val modelHandler    = model.ModelHandler()
+    val keyboardHandler = controller.KeyboardHandler()
+    val game            = controller.Game(ui, modelHandler, keyboardHandler)
 
     this.keys {
-        down(Key.RIGHT) { hero.changePosition(1, 0) }
-        down(Key.LEFT) { hero.changePosition(-1, 0) }
-        down(Key.UP) { hero.changePosition(0, -1) }
-        down(Key.DOWN) { hero.changePosition(0, 1) }
+        down(Key.RIGHT) { keyboardHandler.onCommand(controller.Command.MOVE_RIGHT) }
+        down(Key.LEFT)  { keyboardHandler.onCommand(controller.Command.MOVE_LEFT) }
+        down(Key.UP)    { keyboardHandler.onCommand(controller.Command.MOVE_UP) }
+        down(Key.DOWN)  { keyboardHandler.onCommand(controller.Command.MOVE_DOWN) }
     }
+
+    val job = launch {
+        while (true) {
+            game.tick()
+            delay(16)
+        }
+    }
+    job.join()
 }
