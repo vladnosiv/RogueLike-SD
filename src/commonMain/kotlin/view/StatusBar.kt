@@ -19,6 +19,10 @@ class StatusBar(
     private var x = 0
     private var y = 0
 
+    init {
+        displayInventory()
+    }
+
     fun setInventorySize(inventorySize: Int) {
         if (inventorySize < inventoryItems.size) {
             throw IllegalArgumentException("New inventory size must be no lower than number of items")
@@ -57,6 +61,7 @@ class StatusBar(
             hpBar[i].position(16 * (x + i), 16 * y)
             hpBar[i].playAnimation()
         }
+        displayInventory()
     }
 
     fun addItem(spriteAnimation: SpriteAnimation) {

@@ -1,7 +1,7 @@
 package controller
 
 
-class Game(ui: view.UI, val logic: model.ModelHandler, val commands: KeyboardHandler) {
+class Game(val ui: view.UI, val logic: model.ModelHandler, val commands: KeyboardHandler) {
 
     private val mapUIRepr = ui.createMapRepr()
     private val heroUIRepr = ui.createActorRepr()
@@ -16,6 +16,7 @@ class Game(ui: view.UI, val logic: model.ModelHandler, val commands: KeyboardHan
             }
         }
 
+        ui.displayHp(10, 10)
         for (action: model.Action in logic.onTick()) {
             if (action is model.ActorMoved) {
                 heroUIRepr.place(action.position.x, action.position.y)
