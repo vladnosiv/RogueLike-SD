@@ -18,17 +18,18 @@ class Game(val ui: view.UI, val logic: model.ModelHandler, val commands: Keyboar
 
         ui.displayHp(10, 10)
         for (action: model.Action in logic.onTick()) {
-            if (action is model.ActorMoved) {
-                heroUIRepr.place(action.position.x, action.position.y)
-            } else if (action is model.MapChanged) {
-                mapUIRepr.fill(action.field.map { row ->
-                    row.map { tile ->
-                        when (tile.type) {
-                            model.TileType.FLOOR -> view.Tile(view.TileType.FLOOR, tile.x, tile.y)
-                            else -> view.Tile(view.TileType.WALL, tile.x, tile.y)
+            when (action) {
+                is model.ActorMoved -> heroUIRepr.place(action.position.x, action.position.y)
+                is model.MapChanged -> {
+                    mapUIRepr.fill(action.field.map { row ->
+                        row.map { tile ->
+                            when (tile.type) {
+                                model.TileType.FLOOR -> view.Tile(view.TileType.FLOOR, tile.x, tile.y)
+                                else -> view.Tile(view.TileType.WALL, tile.x, tile.y)
+                            }
                         }
-                    }
-                })
+                    })
+                }
             }
         }
 
