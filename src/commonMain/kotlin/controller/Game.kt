@@ -47,5 +47,4 @@ class Game(private val ui: view.UI,
             }
         }
     }
-
 }

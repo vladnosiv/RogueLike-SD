@@ -1,5 +1,7 @@
 package model
 
+import model.actions.Action
+
 // the class that stores the environment
 class ModelLogic {
     lateinit var environment: Environment
@@ -33,11 +35,9 @@ class ModelLogic {
     }
 
     // moves main character
-    fun mainCharacterMove(move: Move) {
+    fun mainCharacterMove(move: Move): List<Action> {
         assert(canMainCharacterMove(move))
-        environment.map.getTile(environment.mainCharacter.position).actor = null
-        environment.mainCharacter.position += move
-        environment.map.getTile(environment.mainCharacter.position).actor = environment.mainCharacter
+        return environment.mainCharacter.makeMove(move)
     }
 
     // going to the next tick
