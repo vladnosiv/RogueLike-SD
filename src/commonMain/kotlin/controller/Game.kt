@@ -1,9 +1,5 @@
 package controller
 
-import model.actions.Action
-import model.actions.ActorMoved
-import model.actions.MapChanged
-
 
 class Game(val ui: view.UI, val logic: model.ModelHandler, val commands: KeyboardHandler) {
 
@@ -21,10 +17,10 @@ class Game(val ui: view.UI, val logic: model.ModelHandler, val commands: Keyboar
         }
 
         ui.displayHp(10, 10)
-        for (action: Action in logic.onTick()) {
+        for (action: model.Action in logic.onTick()) {
             when (action) {
-                is ActorMoved -> heroUIRepr.place(action.position.x, action.position.y)
-                is MapChanged -> {
+                is model.ActorMoved -> heroUIRepr.place(action.position.x, action.position.y)
+                is model.MapChanged -> {
                     mapUIRepr.fill(action.field.map { row ->
                         row.map { tile ->
                             when (tile.type) {
