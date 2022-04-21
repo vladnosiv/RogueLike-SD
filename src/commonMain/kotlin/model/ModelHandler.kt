@@ -1,5 +1,9 @@
 package model
 
+import model.actions.Action
+import model.actions.HeroMoved
+import model.actions.MapChanged
+
 // class that stores the model
 class ModelHandler {
     private val logic = ModelLogic()
@@ -9,11 +13,11 @@ class ModelHandler {
     // handles move action
     fun onMove(move: Move) {
         if (logic.canMainCharacterMove(move)) {
-            val actor = logic.environment.mainCharacter
-            actions.add(ActorMoved(actor, Position(actor.position, move)))
-            logic.mainCharacterMove(move)
+            actions.addAll(logic.mainCharacterMove(move))
         }
     }
+
+    fun onAttack() {}
 
     // returns all actions from last tick
     fun onTick(): List<Action> {
@@ -22,8 +26,4 @@ class ModelHandler {
         logic.tick()
         return actionsFromLastTick.reversed().distinctBy { action -> action.javaClass } // TODO("Ensure one ActorMoved action on list")
     }
-
-//    fun regenMap(gen: MapGenerator) {
-//        logic.regen(gen)
-//    }
 }
