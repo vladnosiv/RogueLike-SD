@@ -2,6 +2,7 @@ package model
 
 import model.actions.*
 import model.actors.MainCharacter
+import model.actors.Mob
 
 // the class that stores the environment
 class ModelLogic {
@@ -23,6 +24,7 @@ class ModelLogic {
             mainCharacter
         )
 
+
 //        environment.map.getTile(mainCharacterConfig.position).actor = environment.mainCharacter
 
         val actions = environment.map.createMainCharacter(mainCharacterConfig.position, mainCharacter).toMutableList()
@@ -34,7 +36,16 @@ class ModelLogic {
             )
         )
 
+        val configs = environConfig.getMobs(environment)
 
+        val mobs = mutableListOf<Mob>()
+        for (config in configs) {
+            val mob = Mob(config.position, config.hp, config.strategy)
+            map.createMob(config.position, mob)
+            mobs.add(mob)
+        }
+
+        environment.initMobs(mobs)
         return actions
     }
 

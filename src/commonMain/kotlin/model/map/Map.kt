@@ -3,7 +3,9 @@ package model.map
 import model.Position
 import model.actions.Action
 import model.actions.HeroPlaced
+import model.actions.MobCreated
 import model.actors.MainCharacter
+import model.actors.Mob
 
 // class that stores a map of tiles
 data class Map(val field: List<List<Tile>>) {
@@ -44,6 +46,16 @@ data class Map(val field: List<List<Tile>>) {
         tile.actor = mainCharacter
         return listOf(
             HeroPlaced(position)
+        )
+    }
+
+    fun createMob(position: Position, mob: Mob): List<Action> {
+        val tile = getTile(position)
+        assert(tile.actor == null)
+
+        tile.actor = mob
+        return listOf(
+            MobCreated(position, mob)
         )
     }
 }
