@@ -1,5 +1,9 @@
 package model
 
+import model.actions.Action
+import model.actions.ActorMoved
+import model.actions.MapChanged
+
 // class that stores the model
 class ModelHandler {
     private val logic = ModelLogic()
