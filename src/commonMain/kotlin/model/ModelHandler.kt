@@ -1,27 +1,23 @@
 package model
 
-import model.actions.Action
-import model.actions.HeroMoved
-import model.actions.HeroPlaced
-import model.actions.MapChanged
+import model.actions.*
+import model.map.FloorMapGenerator
+import model.map.MapGeneratorConfig
 
 // class that stores the model
 class ModelHandler {
     private val logic = ModelLogic()
-    private var actions = mutableListOf<Action>()
+    private var actions: MutableList<Action>
     private var canMove = true
 
     init {
-        actions = mutableListOf(
-            MapChanged(FloorMapGenerator(MapGeneratorConfig(32, 32)).genMap().field),
-            HeroPlaced(Position(16, 16))
-        )
+        actions = logic.newGame().toMutableList()
     }
 
     // handles move action
-    fun onMove(move: Move) {
-        if (logic.canMainCharacterMove(move) && canMove) {
-            actions.addAll(logic.mainCharacterMove(move))
+    fun onMove(direction: Direction) {
+        if (logic.canMainCharacterMove(direction) && canMove) {
+            actions.addAll(logic.mainCharacterMove(direction))
             canMove = false
         }
     }

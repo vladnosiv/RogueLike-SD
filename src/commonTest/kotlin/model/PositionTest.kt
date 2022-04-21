@@ -7,9 +7,9 @@ internal class PositionTest {
     fun testMoves() {
         val startPosition = Position(0, 0)
 
-        assertEquals(Position(0, -1), startPosition + Move.UP)
-        assertEquals(Position(0, 1), startPosition + Move.DOWN)
-        assertEquals(Position(-1, 0), startPosition + Move.LEFT)
-        assertEquals(Position(1, 0), startPosition + Move.RIGHT)
+        assertEquals(Position(0, -1), startPosition + Direction.UP)
+        assertEquals(Position(0, 1), startPosition + Direction.DOWN)
+        assertEquals(Position(-1, 0), startPosition + Direction.LEFT)
+        assertEquals(Position(1, 0), startPosition + Direction.RIGHT)
     }
 }

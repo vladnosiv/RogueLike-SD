@@ -1,4 +1,4 @@
-package model
+package model.map
 
 // a class that generates a field without walls of a given size
 class FloorMapGenerator(private val config: MapGeneratorConfig) : MapGenerator {

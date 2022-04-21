@@ -1,5 +1,6 @@
-package model
+package model.map
 
+import model.LevelHolder
 import java.io.BufferedReader
 import kotlin.streams.toList
 

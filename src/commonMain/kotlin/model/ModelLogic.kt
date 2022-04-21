@@ -1,22 +1,21 @@
 package model
 
-import model.actions.Action
+import model.actions.*
+import model.map.FloorMapGenerator
+import model.map.MapGeneratorConfig
 
 // the class that stores the environment
 class ModelLogic {
     lateinit var environment: Environment
     var lvl: Int = 0
 
-    init {
-        newGame()
-    }
-
-    fun newGame() {
+    fun newGame(): List<Action> {
         lvl = 1
         val environConfig = EnvironmentConfig(lvl)
         val mainCharacterConfig = environConfig.mainCharacterConfig
+        val map = environConfig.generator.genMap()
         environment = Environment(
-            environConfig.generator.genMap(),
+            map,
             MainCharacter(
                 mainCharacterConfig.position,
                 mainCharacterConfig.hp,
@@ -25,21 +24,28 @@ class ModelLogic {
         )
 
         environment.map.getTile(mainCharacterConfig.position).actor = environment.mainCharacter
+
+        return listOf(
+            MapChanged(map.field),
+            HeroPlaced(mainCharacterConfig.position),
+            HeroChangedDirection(mainCharacterConfig.direction),
+            HeroHPChanged(mainCharacterConfig.hp, mainCharacterConfig.hp)
+        )
     }
 
     // returns true if the main character can move in the move direction, otherwise false
-    fun canMainCharacterMove(move: Move): Boolean {
-        val newPosition = environment.mainCharacter.position + move
+    fun canMainCharacterMove(direction: Direction): Boolean {
+        val newPosition = environment.mainCharacter.position + direction
         return environment.map.isPositionOnField(newPosition) &&
                 environment.map.getTile(newPosition).type.isPassable()
     }
 
     // moves main character
-    fun mainCharacterMove(move: Move): List<Action> {
-        assert(canMainCharacterMove(move))
+    fun mainCharacterMove(direction: Direction): List<Action> {
+        assert(canMainCharacterMove(direction))
         val position = environment.mainCharacter.position
-        val actions = environment.map.moveActor(position, position + move).toMutableList()
-        actions.addAll(environment.mainCharacter.makeMove(move))
+        val actions = environment.map.moveActor(position, position + direction).toMutableList()
+        actions.addAll(environment.mainCharacter.makeMove(direction))
         return actions
     }
 

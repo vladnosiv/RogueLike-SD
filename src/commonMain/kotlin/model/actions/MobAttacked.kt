@@ -1,5 +1,5 @@
 package model.actions
 
-import model.Move
+import model.Direction
 
-data class MobAttacked(val move: Move): Action
+data class MobAttacked(val direction: Direction): Action
