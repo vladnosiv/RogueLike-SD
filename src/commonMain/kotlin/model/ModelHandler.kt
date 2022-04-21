@@ -1,9 +1,6 @@
 package model
 
-import model.actions.Action
-import model.actions.HeroMoved
-import model.actions.HeroPlaced
-import model.actions.MapChanged
+import model.actions.*
 import model.map.FloorMapGenerator
 import model.map.MapGeneratorConfig
 
@@ -16,7 +13,8 @@ class ModelHandler {
     init {
         actions = mutableListOf(
             MapChanged(FloorMapGenerator(MapGeneratorConfig(32, 32)).genMap().field),
-            HeroPlaced(Position(16, 16))
+            HeroPlaced(Position(16, 16)),
+            HeroHPChanged(10, 10)
         )
     }
 
