@@ -21,6 +21,7 @@ suspend fun main() = Korge(width = tileSize * mapWidth, height = tileSize * mapH
         down(Key.LEFT)  { keyboardHandler.onCommand(controller.Command.MOVE_LEFT) }
         down(Key.UP)    { keyboardHandler.onCommand(controller.Command.MOVE_UP) }
         down(Key.DOWN)  { keyboardHandler.onCommand(controller.Command.MOVE_DOWN) }
+        down(Key.SPACE) { keyboardHandler.onCommand(controller.Command.ATTACK) }
     }
 
     val job = launch {

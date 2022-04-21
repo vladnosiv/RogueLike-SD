@@ -24,6 +24,7 @@ class Game(private val ui: view.UI,
                 Command.MOVE_DOWN -> logic.onMove(model.Move.DOWN)
                 Command.MOVE_LEFT -> logic.onMove(model.Move.LEFT)
                 Command.MOVE_RIGHT -> logic.onMove(model.Move.RIGHT)
+                Command.ATTACK -> logic.onAttack()
             }
         }
         commands.clear()
@@ -46,4 +47,5 @@ class Game(private val ui: view.UI,
             }
         }
     }
+
 }
