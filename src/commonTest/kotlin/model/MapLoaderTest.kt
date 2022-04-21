@@ -1,5 +1,8 @@
 package model
 
+import model.map.FloorMapGenerator
+import model.map.MapGeneratorConfig
+import model.map.MapLoader
 import kotlin.test.*
 
 class MapLoaderTest {

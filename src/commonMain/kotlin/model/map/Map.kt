@@ -1,5 +1,6 @@
-package model
+package model.map
 
+import model.Position
 import model.actions.Action
 
 // class that stores a map of tiles

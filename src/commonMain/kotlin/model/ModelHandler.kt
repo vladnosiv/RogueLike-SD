@@ -4,6 +4,8 @@ import model.actions.Action
 import model.actions.HeroMoved
 import model.actions.HeroPlaced
 import model.actions.MapChanged
+import model.map.FloorMapGenerator
+import model.map.MapGeneratorConfig
 
 // class that stores the model
 class ModelHandler {

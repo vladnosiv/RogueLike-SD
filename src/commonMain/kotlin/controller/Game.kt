@@ -1,6 +1,7 @@
 package controller
 
 import kotlinx.coroutines.*
+import model.map.TileType
 
 
 class Game(private val ui: view.UI,
@@ -43,7 +44,7 @@ class Game(private val ui: view.UI,
                     mapUIRepr.fill(action.field.map { row ->
                         row.map { tile ->
                             when (tile.type) {
-                                model.TileType.FLOOR -> view.Tile(view.TileType.FLOOR, tile.x, tile.y)
+                                TileType.FLOOR -> view.Tile(view.TileType.FLOOR, tile.x, tile.y)
                                 else -> view.Tile(view.TileType.WALL, tile.x, tile.y)
                             }
                         }

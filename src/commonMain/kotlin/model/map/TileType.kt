@@ -1,4 +1,4 @@
-package model
+package model.map
 
 // enum for different tile types
 enum class TileType {
