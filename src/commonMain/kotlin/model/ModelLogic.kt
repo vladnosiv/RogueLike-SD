@@ -29,7 +29,7 @@ class ModelLogic {
         actions.addAll(
             listOf(
                 MapChanged(map.field),
-                HeroChangedDirection(mainCharacterConfig.direction),
+//                HeroChangedDirection(mainCharacterConfig.direction),
                 HeroHPChanged(mainCharacterConfig.hp, mainCharacterConfig.hp)
             )
         )
