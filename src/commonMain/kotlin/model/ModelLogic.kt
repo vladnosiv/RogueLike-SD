@@ -37,12 +37,15 @@ class ModelLogic {
     // moves main character
     fun mainCharacterMove(move: Move): List<Action> {
         assert(canMainCharacterMove(move))
-        return environment.mainCharacter.makeMove(move)
+        val position = environment.mainCharacter.position
+        val actions = environment.map.moveActor(position, position + move).toMutableList()
+        actions.addAll(environment.mainCharacter.makeMove(move))
+        return actions
     }
 
     // going to the next tick
-    fun tick() {
-        environment.timer.tick()
+    fun tick(): List<Action> {
+        return environment.timer.tick()
 //        return environment.mobs.map { it.makeMove() }.flatMap { it.asIterable() }
     }
 }
