@@ -36,11 +36,20 @@ class Game(private val ui: view.UI,
     suspend private fun displayActions() {
         for (action: Action in logic.onTick()) {
             when (action) {
-                is HeroPlaced    -> heroUIRepr.place(action.position.x, action.position.y)
-                is HeroHPChanged -> ui.displayHp(action.current, action.max)
-                is HeroMoved     -> heroUIRepr.move(action.dx, action.dy)
-                is HeroAttacked  -> heroUIRepr.hit()
-                is MapChanged    -> {
+                is HeroPlaced           -> heroUIRepr.place(action.position.x, action.position.y)
+                is HeroHPChanged        -> ui.displayHp(action.current, action.max)
+                is HeroMoved            -> heroUIRepr.move(action.dx, action.dy)
+                is HeroChangedDirection -> {
+                    when (action.direction) {
+                        model.Direction.UP    -> heroUIRepr.turnDown()
+                        model.Direction.DOWN  -> heroUIRepr.turnUp()
+                        model.Direction.LEFT  -> heroUIRepr.turnLeft()
+                        model.Direction.RIGHT -> heroUIRepr.turnRight()
+                        else -> continue
+                    }
+                }
+                is HeroAttacked         -> heroUIRepr.hit()
+                is MapChanged           -> {
                     mapUIRepr.fill(action.field.map { row ->
                         row.map { tile ->
                             when (tile.type) {
