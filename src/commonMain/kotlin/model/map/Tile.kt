@@ -1,6 +1,6 @@
 package model.map
 
-import model.Actor
+import model.actors.Actor
 
 // class stores information about tile
 // TODO: replace x, y with Position(x, y)
