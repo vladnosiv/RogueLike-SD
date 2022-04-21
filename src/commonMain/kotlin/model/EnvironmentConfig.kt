@@ -1,5 +1,6 @@
 package model
 
+import model.actors.MainCharacterConfig
 import model.map.FloorMapGenerator
 import model.map.MapGeneratorConfig
 

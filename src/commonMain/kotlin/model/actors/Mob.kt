@@ -1,5 +1,6 @@
-package model
+package model.actors
 
+import model.Position
 import model.actions.Action
 
 // class that stores information about a mob

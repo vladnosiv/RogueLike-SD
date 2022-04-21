@@ -1,5 +1,7 @@
-package model
+package model.actors
 
+import model.Direction
+import model.Position
 import model.actions.Action
 import model.actions.HeroAttacked
 import model.actions.HeroChangedDirection

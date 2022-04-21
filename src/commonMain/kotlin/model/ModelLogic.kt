@@ -1,8 +1,7 @@
 package model
 
 import model.actions.*
-import model.map.FloorMapGenerator
-import model.map.MapGeneratorConfig
+import model.actors.MainCharacter
 
 // the class that stores the environment
 class ModelLogic {
