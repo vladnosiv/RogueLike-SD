@@ -1,5 +1,6 @@
 package controller
 
+import kotlin.collections.HashMap
 import kotlinx.coroutines.*
 import model.actions.*
 
@@ -9,7 +10,8 @@ class Game(private val ui: view.UI,
            private val commands: KeyboardHandler) {
 
     private val mapUIRepr = ui.createMapRepr()
-    private val heroUIRepr = ui.createActorRepr()
+    private val heroUIRepr = ui.createHeroRepr()
+    private val mobsReprs = HashMap<model.actors.Actor, view.UI.ActorEventHandler>()
 
     init {
         GlobalScope.launch{ tick() }
@@ -35,6 +37,7 @@ class Game(private val ui: view.UI,
 
     suspend private fun displayActions() {
         for (action: Action in logic.onTick()) {
+            println(action::class.simpleName)
             when (action) {
                 is HeroPlaced           -> heroUIRepr.place(action.position.x, action.position.y)
                 is HeroHPChanged        -> ui.displayHp(action.current, action.max)
@@ -49,6 +52,12 @@ class Game(private val ui: view.UI,
                     }
                 }
                 is HeroAttacked         -> heroUIRepr.hit()
+                is MobCreated           -> {
+                    mobsReprs.put(action.actor, ui.createMobRepr())
+                    mobsReprs.get(action.actor)?.place(action.position.x, action.position.y)
+                }
+                is MobAttacked          -> mobsReprs.get(action.actor)?.hit()
+                is MobMoved             -> mobsReprs.get(action.actor)?.move(action.dx, action.dy)
                 is MapChanged           -> {
                     mapUIRepr.fill(action.field.map { row ->
                         row.map { tile ->

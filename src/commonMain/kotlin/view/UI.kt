@@ -28,8 +28,9 @@ class UI(camera: Camera) {
         fun fill(field: List<List<Tile>>)
     }
 
-    fun createActorRepr() = object: ActorEventHandler {
-        val actor = Character(actorsContainer, TileAnimation.Characters.Knight, TileAnimation.Weapons.RegularSword)
+    private fun createActorRepr(character: view.sprites.CharacterSprite,
+                                weapon: view.sprites.Weapon) = object: ActorEventHandler {
+        val actor = Character(actorsContainer, character, weapon)
         override suspend fun move(dx: Int, dy: Int) = actor.changePosition(dx, dy)
         override fun turnLeft() = actor.flipX()
         override fun turnRight() = actor.flipX()
@@ -38,6 +39,10 @@ class UI(camera: Camera) {
         override fun place(x: Int, y: Int) = actor.setPosition(x, y)
         override suspend fun hit() = actor.hit()
     }
+
+    fun createHeroRepr() = createActorRepr(TileAnimation.Characters.Knight, TileAnimation.Weapons.RegularSword)
+
+    fun createMobRepr() = createActorRepr(TileAnimation.Characters.Zombie, TileAnimation.Weapons.Hammer)
 
     fun createMapRepr() = object: MapEventHandler {
         val map = Map(mapContainer)
