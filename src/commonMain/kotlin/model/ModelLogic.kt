@@ -28,18 +28,18 @@ class ModelLogic {
     }
 
     // returns true if the main character can move in the move direction, otherwise false
-    fun canMainCharacterMove(move: Move): Boolean {
-        val newPosition = environment.mainCharacter.position + move
+    fun canMainCharacterMove(direction: Direction): Boolean {
+        val newPosition = environment.mainCharacter.position + direction
         return environment.map.isPositionOnField(newPosition) &&
                 environment.map.getTile(newPosition).type.isPassable()
     }
 
     // moves main character
-    fun mainCharacterMove(move: Move): List<Action> {
-        assert(canMainCharacterMove(move))
+    fun mainCharacterMove(direction: Direction): List<Action> {
+        assert(canMainCharacterMove(direction))
         val position = environment.mainCharacter.position
-        val actions = environment.map.moveActor(position, position + move).toMutableList()
-        actions.addAll(environment.mainCharacter.makeMove(move))
+        val actions = environment.map.moveActor(position, position + direction).toMutableList()
+        actions.addAll(environment.mainCharacter.makeMove(direction))
         return actions
     }
 

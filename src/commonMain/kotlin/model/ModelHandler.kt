@@ -19,9 +19,9 @@ class ModelHandler {
     }
 
     // handles move action
-    fun onMove(move: Move) {
-        if (logic.canMainCharacterMove(move) && canMove) {
-            actions.addAll(logic.mainCharacterMove(move))
+    fun onMove(direction: Direction) {
+        if (logic.canMainCharacterMove(direction) && canMove) {
+            actions.addAll(logic.mainCharacterMove(direction))
             canMove = false
         }
     }

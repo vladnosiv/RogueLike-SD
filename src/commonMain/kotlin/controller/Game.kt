@@ -22,10 +22,10 @@ class Game(private val ui: view.UI,
     private fun handleCommands() {
         for (cmd: Command in commands.getAll()) {
             when (cmd) {
-                Command.MOVE_UP -> logic.onMove(model.Move.UP)
-                Command.MOVE_DOWN -> logic.onMove(model.Move.DOWN)
-                Command.MOVE_LEFT -> logic.onMove(model.Move.LEFT)
-                Command.MOVE_RIGHT -> logic.onMove(model.Move.RIGHT)
+                Command.MOVE_UP -> logic.onMove(model.Direction.UP)
+                Command.MOVE_DOWN -> logic.onMove(model.Direction.DOWN)
+                Command.MOVE_LEFT -> logic.onMove(model.Direction.LEFT)
+                Command.MOVE_RIGHT -> logic.onMove(model.Direction.RIGHT)
                 Command.ATTACK -> logic.onAttack()
             }
         }

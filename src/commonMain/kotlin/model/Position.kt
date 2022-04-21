@@ -2,9 +2,9 @@ package model
 
 // position in two-dimensional space
 data class Position(var x: Int, var y: Int) {
-    constructor(position: Position, move: Move) : this(position.x + move.deltaX, position.y + move.deltaY)
+    constructor(position: Position, direction: Direction) : this(position.x + direction.deltaX, position.y + direction.deltaY)
 
-    operator fun plus(move: Move): Position {
-        return Position(this, move)
+    operator fun plus(direction: Direction): Position {
+        return Position(this, direction)
     }
 }

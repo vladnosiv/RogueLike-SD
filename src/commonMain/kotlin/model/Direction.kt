@@ -1,7 +1,7 @@
 package model
 
 // enum for moves
-enum class Move {
+enum class Direction {
     UP {
         override val deltaY = -1
     },
