@@ -9,6 +9,7 @@ class ModelHandler {
     private val logic = ModelLogic()
     private var actions: MutableList<Action>
     private var canMove = true
+    private var canAttack = true
 
     init {
         actions = logic.newGame().toMutableList()
@@ -23,7 +24,10 @@ class ModelHandler {
     }
 
     fun onAttack() {
-        actions.addAll(logic.mainCharacterAttack())
+        if (canAttack) {
+            actions.addAll(logic.mainCharacterAttack())
+            canAttack = false
+        }
     }
 
     // returns all actions from last tick
@@ -32,6 +36,7 @@ class ModelHandler {
 
         actions = mutableListOf()
         canMove = true
+        canAttack = true
 
         actionsFromLastTick.addAll(logic.tick())
         // TODO("Ensure one HeroMoved action on list")
