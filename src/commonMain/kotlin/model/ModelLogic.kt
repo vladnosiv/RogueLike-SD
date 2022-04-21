@@ -13,23 +13,29 @@ class ModelLogic {
         val environConfig = EnvironmentConfig(lvl)
         val mainCharacterConfig = environConfig.mainCharacterConfig
         val map = environConfig.generator.genMap()
+        val mainCharacter = MainCharacter(
+            mainCharacterConfig.position,
+            mainCharacterConfig.hp,
+            mainCharacterConfig.exp
+        )
         environment = Environment(
             map,
-            MainCharacter(
-                mainCharacterConfig.position,
-                mainCharacterConfig.hp,
-                mainCharacterConfig.exp
+            mainCharacter
+        )
+
+//        environment.map.getTile(mainCharacterConfig.position).actor = environment.mainCharacter
+
+        val actions = environment.map.createMainCharacter(mainCharacterConfig.position, mainCharacter).toMutableList()
+        actions.addAll(
+            listOf(
+                MapChanged(map.field),
+                HeroChangedDirection(mainCharacterConfig.direction),
+                HeroHPChanged(mainCharacterConfig.hp, mainCharacterConfig.hp)
             )
         )
 
-        environment.map.getTile(mainCharacterConfig.position).actor = environment.mainCharacter
 
-        return listOf(
-            MapChanged(map.field),
-            HeroPlaced(mainCharacterConfig.position),
-            HeroChangedDirection(mainCharacterConfig.direction),
-            HeroHPChanged(mainCharacterConfig.hp, mainCharacterConfig.hp)
-        )
+        return actions
     }
 
     // returns true if the main character can move in the move direction, otherwise false
