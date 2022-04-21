@@ -44,8 +44,8 @@ class Game(private val ui: view.UI,
                 is HeroMoved            -> heroUIRepr.move(action.dx, action.dy)
                 is HeroChangedDirection -> {
                     when (action.direction) {
-                        model.Direction.UP    -> heroUIRepr.turnDown()
-                        model.Direction.DOWN  -> heroUIRepr.turnUp()
+                        model.Direction.UP    -> heroUIRepr.turnUp()
+                        model.Direction.DOWN  -> heroUIRepr.turnDown()
                         model.Direction.LEFT  -> heroUIRepr.turnLeft()
                         model.Direction.RIGHT -> heroUIRepr.turnRight()
                         else -> continue
