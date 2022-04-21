@@ -1,6 +1,7 @@
 package controller
 
 import kotlinx.coroutines.*
+import model.actions.*
 
 
 class Game(private val ui: view.UI,
@@ -11,35 +12,35 @@ class Game(private val ui: view.UI,
     private val heroUIRepr = ui.createActorRepr()
 
     init {
-        displayActions()
+        GlobalScope.launch{ tick() }
     }
 
-    fun tick() {
+    suspend fun tick() {
         handleCommands()
         displayActions()
     }
 
-    private fun handleCommands() {
+    suspend private fun handleCommands() {
         for (cmd: Command in commands.getAll()) {
             when (cmd) {
-                Command.MOVE_UP -> logic.onMove(model.Move.UP)
-                Command.MOVE_DOWN -> logic.onMove(model.Move.DOWN)
-                Command.MOVE_LEFT -> logic.onMove(model.Move.LEFT)
+                Command.MOVE_UP    -> logic.onMove(model.Move.UP)
+                Command.MOVE_DOWN  -> logic.onMove(model.Move.DOWN)
+                Command.MOVE_LEFT  -> logic.onMove(model.Move.LEFT)
                 Command.MOVE_RIGHT -> logic.onMove(model.Move.RIGHT)
-                Command.ATTACK -> logic.onAttack()
+                Command.ATTACK     -> logic.onAttack()
             }
         }
         commands.clear()
     }
 
-    private fun displayActions() {
-        for (action: model.actions.Action in logic.onTick()) {
+    suspend private fun displayActions() {
+        for (action: Action in logic.onTick()) {
             when (action) {
-                is model.actions.HeroPlaced -> heroUIRepr.place(action.position.x, action.position.y)
-                is model.actions.HeroHPChanged -> ui.displayHp(action.current, action.max)
-                is model.actions.HeroMoved -> GlobalScope.launch{ heroUIRepr.move(action.dx, action.dy) }
-                is model.actions.HeroAttacked -> GlobalScope.launch{ heroUIRepr.hit() }
-                is model.actions.MapChanged -> {
+                is HeroPlaced    -> heroUIRepr.place(action.position.x, action.position.y)
+                is HeroHPChanged -> ui.displayHp(action.current, action.max)
+                is HeroMoved     -> heroUIRepr.move(action.dx, action.dy)
+                is HeroAttacked  -> heroUIRepr.hit()
+                is MapChanged    -> {
                     mapUIRepr.fill(action.field.map { row ->
                         row.map { tile ->
                             when (tile.type) {
