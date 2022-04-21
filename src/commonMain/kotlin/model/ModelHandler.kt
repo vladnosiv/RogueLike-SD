@@ -7,15 +7,11 @@ import model.map.MapGeneratorConfig
 // class that stores the model
 class ModelHandler {
     private val logic = ModelLogic()
-    private var actions = mutableListOf<Action>()
+    private var actions: MutableList<Action>
     private var canMove = true
 
     init {
-        actions = mutableListOf(
-            MapChanged(FloorMapGenerator(MapGeneratorConfig(32, 32)).genMap().field),
-            HeroPlaced(Position(16, 16)),
-            HeroHPChanged(10, 10)
-        )
+        actions = logic.newGame().toMutableList()
     }
 
     // handles move action
