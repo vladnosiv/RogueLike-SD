@@ -22,7 +22,9 @@ class ModelHandler {
         }
     }
 
-    fun onAttack() {}
+    fun onAttack() {
+        actions.addAll(logic.mainCharacterAttack())
+    }
 
     // returns all actions from last tick
     fun onTick(): List<Action> {

@@ -1,6 +1,7 @@
 package model
 
 import model.actions.Action
+import model.actions.HeroAttacked
 import model.actions.HeroChangedDirection
 import model.actions.HeroMoved
 
@@ -16,5 +17,11 @@ class MainCharacter(position: Position, hp: Int, var exp: Int) : Actor(position,
             position += direction
             listOf(HeroMoved(direction.deltaX, direction.deltaY))
         }
+    }
+
+    fun attack(): List<Action> {
+        return listOf(
+            HeroAttacked(direction)
+        )
     }
 }

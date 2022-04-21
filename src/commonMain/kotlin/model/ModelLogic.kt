@@ -49,6 +49,10 @@ class ModelLogic {
         return actions
     }
 
+    fun mainCharacterAttack(): List<Action> {
+        return environment.mainCharacter.attack()
+    }
+
     // going to the next tick
     fun tick(): List<Action> {
         return environment.timer.tick()
