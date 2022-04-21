@@ -24,11 +24,10 @@ suspend fun main() = Korge(width = tileSize * mapWidth, height = tileSize * mapH
         down(Key.SPACE) { keyboardHandler.onCommand(controller.Command.ATTACK) }
     }
 
-    val job = launch {
+    launch {
         while (true) {
             game.tick()
             delay(16)
         }
-    }
-    job.join()
+    }.join()
 }

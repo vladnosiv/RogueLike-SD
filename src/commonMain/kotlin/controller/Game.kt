@@ -1,5 +1,7 @@
 package controller
 
+import kotlinx.coroutines.*
+
 
 class Game(private val ui: view.UI,
            private val logic: model.ModelHandler,
@@ -31,10 +33,13 @@ class Game(private val ui: view.UI,
     }
 
     private fun displayActions() {
-        for (action: model.Action in logic.onTick()) {
+        for (action: model.actions.Action in logic.onTick()) {
             when (action) {
-                is model.ActorMoved -> heroUIRepr.place(action.position.x, action.position.y)
-                is model.MapChanged -> {
+                is model.actions.HeroPlaced -> heroUIRepr.place(action.position.x, action.position.y)
+                is model.actions.HeroHPChanged -> ui.displayHp(action.current, action.max)
+                is model.actions.HeroMoved -> GlobalScope.launch{ heroUIRepr.move(action.dx, action.dy) }
+                is model.actions.HeroAttacked -> GlobalScope.launch{ heroUIRepr.hit() }
+                is model.actions.MapChanged -> {
                     mapUIRepr.fill(action.field.map { row ->
                         row.map { tile ->
                             when (tile.type) {

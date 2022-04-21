@@ -17,6 +17,7 @@ class UI(camera: Camera) {
     interface ActorEventHandler: EventHandler {
         suspend fun move(dx: Int, dy: Int)
         fun place(x: Int, y: Int)
+        suspend fun hit()
     }
 
     interface MapEventHandler: EventHandler {
@@ -27,6 +28,7 @@ class UI(camera: Camera) {
         val actor = Character(actorsContainer, TileAnimation.Characters.Knight, TileAnimation.Weapons.RegularSword)
         override suspend fun move(dx: Int, dy: Int) = actor.changePosition(dx, dy)
         override fun place(x: Int, y: Int) = actor.setPosition(x, y)
+        override suspend fun hit() = actor.hit()
     }
 
     fun createMapRepr() = object: MapEventHandler {
