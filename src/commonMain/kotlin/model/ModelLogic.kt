@@ -84,7 +84,8 @@ class ModelLogic {
 
     // going to the next tick
     fun tick(): List<Action> {
-        return environment.timer.tick()
-//        return environment.mobs.map { it.makeMove() }.flatMap { it.asIterable() }
+        val actions = environment.timer.tick().toMutableList()
+        actions.addAll(environment.mobs.map { it.makeMove() }.flatMap { it.asIterable() })
+        return actions
     }
 }

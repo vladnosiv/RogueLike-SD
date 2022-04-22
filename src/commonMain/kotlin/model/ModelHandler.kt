@@ -1,8 +1,7 @@
 package model
 
 import model.actions.*
-import model.map.FloorMapGenerator
-import model.map.MapGeneratorConfig
+import java.util.*
 
 // class that stores the model
 class ModelHandler {
@@ -39,18 +38,24 @@ class ModelHandler {
         canMove = true
         canAttack = true
 
-        actionsFromLastTick.addAll(logic.tick())
-        // TODO("Ensure one HeroMoved action on list")
-        for (action in actions) {
-            actions.addAll(handleAction(action))
+        val queue = LinkedList<Action>()
+        queue.addAll(actionsFromLastTick)
+        queue.addAll(logic.tick())
+//         TODO("Ensure one HeroMoved action on list")
+        for (action in queue) {
+            queue.addAll(handleAction(action))
         }
-        return actionsFromLastTick
+        return queue.toList()
     }
 
     private fun handleAction(action: Action): List<Action> {
         return when (action) { // TODO("Other actions")
-            is HeroMoved -> emptyList()
-            else -> throw Exception()
+            is MobMoved -> {
+                val direction = Direction(action.dx, action.dy)
+                val pos = action.actor.position
+                logic.environment.map.moveActor(pos - direction, pos)
+            }
+            else -> emptyList()
         }
     }
 

@@ -1,9 +1,6 @@
 package model
 
-import model.actors.MainCharacterConfig
-import model.actors.Mob
-import model.actors.MobConfig
-import model.actors.PassStrategy
+import model.actors.*
 import model.map.FloorMapGenerator
 import model.map.MapGeneratorConfig
 
@@ -13,7 +10,8 @@ class EnvironmentConfig(lvl: Int) {
     fun getMobs(environment: Environment): List<MobConfig>{
         return listOf(
             MobConfig(Position(10, 10), 1, PassStrategy(environment)),
-            MobConfig(Position(20, 20), 1, PassStrategy(environment))
+            MobConfig(Position(20, 20), 1, AggressiveStrategy(environment)),
+            MobConfig(Position(25, 25), 1, FearfulStrategy(environment))
         )
     }
 }
