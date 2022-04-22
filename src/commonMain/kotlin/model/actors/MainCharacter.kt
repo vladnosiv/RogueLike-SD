@@ -14,7 +14,11 @@ class MainCharacter(position: Position, hp: Int, var exp: Int) : Actor(position,
     fun makeMove(direction: Direction): List<Action> {
         return if (this.direction != direction) {
             this.direction = direction
-            listOf(HeroChangedDirection(direction))
+            position += direction
+            listOf(
+                HeroChangedDirection(direction),
+                HeroMoved(direction.deltaX, direction.deltaY)
+            )
         } else {
             position += direction
             listOf(HeroMoved(direction.deltaX, direction.deltaY))
@@ -25,5 +29,17 @@ class MainCharacter(position: Position, hp: Int, var exp: Int) : Actor(position,
         return listOf(
             HeroAttacked(direction)
         )
+    }
+
+    fun attack(direction: Direction): List<Action> {
+        return if (this.direction != direction) {
+            this.direction = direction
+            listOf(
+                HeroChangedDirection(direction),
+                HeroAttacked(direction)
+            )
+        } else {
+            listOf(HeroAttacked(direction))
+        }
     }
 }

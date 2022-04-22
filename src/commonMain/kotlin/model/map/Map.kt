@@ -24,6 +24,9 @@ data class Map(val field: List<List<Tile>>) {
         toTile.actor = fromTile.actor
         fromTile.actor = null
 
+        assert(fromTile.actor == null)
+        assert(toTile.actor != null)
+
         return emptyList()
     }
 

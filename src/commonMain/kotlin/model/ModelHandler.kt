@@ -20,6 +20,7 @@ class ModelHandler {
         if (logic.canMainCharacterMove(direction) && canMove) {
             actions.addAll(logic.mainCharacterMove(direction))
             canMove = false
+            canAttack = false
         }
     }
 
