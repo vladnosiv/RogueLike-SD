@@ -61,6 +61,11 @@ object TileAnimation {
             getAnimation("knight_f_run_anim")
         )
 
+        val OrcWarrior = CharacterSprite(
+            getAnimation("orc_warrior_idle_anim"),
+            getAnimation("orc_warrior_run_anim")
+        )
+
         val Wizard = CharacterSprite(
             getAnimation("wizzard_f_idle_anim"),
             getAnimation("wizzard_f_run_anim")
@@ -79,7 +84,8 @@ object TileAnimation {
 
     object Weapons {
         val RegularSword = Weapon(getAnimation("weapon_regular_sword"))
-        val Hammer = Weapon(getAnimation("weapon_hammer"))
-        val MagicStick = Weapon(getAnimation("weapon_red_magic_staff"))
+        val Hammer       = Weapon(getAnimation("weapon_hammer"))
+        val Axe          = Weapon(getAnimation("weapon_axe"))
+        val MagicStick   = Weapon(getAnimation("weapon_red_magic_staff"))
     }
 }

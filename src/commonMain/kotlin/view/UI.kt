@@ -36,7 +36,7 @@ class UI(camera: Camera) {
 
     fun createHeroRepr() = createActorRepr(TileAnimation.Characters.Knight, TileAnimation.Weapons.RegularSword)
 
-    fun createMobRepr() = createActorRepr(TileAnimation.Characters.Zombie, TileAnimation.Weapons.Hammer)
+    fun createMobRepr() = createActorRepr(TileAnimation.Characters.OrcWarrior, TileAnimation.Weapons.Axe)
 
     fun createMapRepr() = object: MapEventHandler {
         val map = Map(mapContainer)

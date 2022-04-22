@@ -9,9 +9,9 @@ import view.Direction
 
 data class Weapon(
     val sprite: SpriteAnimation,
-    val defaultAngle: Angle = (-45).degrees,
+    val defaultAngle: Angle = (-30).degrees,
     val hitAngle: Angle = 135.degrees,
-    val hitDistance: Int = 5,
+    val hitDistance: Int = 6,
     val getWeaponPosition: (Int, Int, Direction) -> Pair<Int, Int> = {
         x: Int, y: Int, direction: Direction -> when (direction) {
             Direction.UP_LEFT    -> 16 * x + 12 to 16 * y + 12
@@ -29,8 +29,8 @@ data class Weapon(
             Direction.UP_RIGHT   -> (0).degrees
             Direction.DOWN_LEFT  -> (180).degrees
             Direction.DOWN_RIGHT -> (180).degrees
-            Direction.LEFT       -> (+45).degrees
-            Direction.RIGHT      -> (-45).degrees
+            Direction.LEFT       -> (+30).degrees
+            Direction.RIGHT      -> (-30).degrees
             else                 -> (0).degrees
         }
     }
