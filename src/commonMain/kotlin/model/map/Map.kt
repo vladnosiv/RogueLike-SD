@@ -1,5 +1,6 @@
 package model.map
 
+import model.Direction
 import model.Position
 import model.actions.Action
 import model.actions.HeroPlaced
@@ -40,6 +41,15 @@ data class Map(val field: List<List<Tile>>) {
     fun getTile(position: Position): Tile {
         assert(isPositionOnField(position))
         return field[position.x][position.y]
+    }
+
+    fun canStep(position: Position): Boolean {
+        if (!isPositionOnField(position)) {
+            return false
+        }
+
+        val tile = getTile(position)
+        return tile.isEmpty() && tile.type.isPassable()
     }
 
     fun createMainCharacter(position: Position, mainCharacter: MainCharacter): List<Action> {
