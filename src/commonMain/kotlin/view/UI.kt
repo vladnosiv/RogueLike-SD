@@ -16,10 +16,7 @@ class UI(camera: Camera) {
 
     interface ActorEventHandler: EventHandler {
         suspend fun move(dx: Int, dy: Int)
-        fun turnLeft()
-        fun turnRight()
-        fun turnUp()
-        fun turnDown()
+        fun turn(direction: Direction)
         fun place(x: Int, y: Int)
         suspend fun hit()
     }
@@ -32,10 +29,7 @@ class UI(camera: Camera) {
                                 weapon: view.sprites.Weapon) = object: ActorEventHandler {
         val actor = Character(actorsContainer, character, weapon)
         override suspend fun move(dx: Int, dy: Int) = actor.changePosition(dx, dy)
-        override fun turnLeft() = actor.flipX()
-        override fun turnRight() = actor.flipX()
-        override fun turnUp() {}
-        override fun turnDown() {}
+        override fun turn(direction: Direction) = actor.changeDirection(direction)
         override fun place(x: Int, y: Int) = actor.setPosition(x, y)
         override suspend fun hit() = actor.hit()
     }

@@ -4,6 +4,7 @@ import com.soywiz.klock.milliseconds
 import com.soywiz.kmem.toInt
 import com.soywiz.korge.animate.*
 import com.soywiz.korge.view.*
+import com.soywiz.korge.view.tween.moveTo
 import com.soywiz.korge.view.tween.rotateTo
 import com.soywiz.korma.geom.*
 import view.sprites.CharacterSprite
@@ -21,7 +22,7 @@ class Character(
 
     private val weaponSprite = weapon?.let { container.sprite(it.sprite).rotation(it.defaultAngle) }
 
-    private var currentDirection = 1 // 1 for right, -1 for left
+    private var currentDirection = Direction.RIGHT
 
     private var x = 0
     private var y = 0
@@ -54,9 +55,6 @@ class Character(
             return
         }
         isMoving = true
-        if (dx != 0 && (if (dx > 0) 1 else -1) != currentDirection) {
-            flipX()
-        }
         x += dx
         y += dy
         characterSprite.playAnimationLooped(character.run, spriteDisplayTime = character.runDuration)
@@ -85,23 +83,63 @@ class Character(
             return
         }
         isMoving = true
-        val currentAngle = weaponSprite?.rotation
-        weapon?.let { weaponSprite!!.rotateTo(angle = it.hitAngle, time = 150.milliseconds) }
-        weapon?.let { weaponSprite!!.rotateTo(angle = currentAngle!!, time = 100.milliseconds) }
+
+        val wAngle = weaponSprite?.rotation
+        val wX = weapon?.getWeaponPosition!!.invoke(x, y, currentDirection).first
+        val wY = weapon?.getWeaponPosition!!.invoke(x, y, currentDirection).second
+        when (currentDirection) {
+            Direction.UP_LEFT, Direction.UP_RIGHT -> {
+                weapon?.let { weaponSprite!!.moveTo(wX, wY - it.hitDistance, time = 100.milliseconds) }
+                weapon?.let { weaponSprite!!.moveTo(wX, wY, time = 100.milliseconds) }
+            }
+            Direction.DOWN_LEFT, Direction.DOWN_RIGHT -> {
+                weapon?.let { weaponSprite!!.moveTo(wX, wY + it.hitDistance, time = 100.milliseconds) }
+                weapon?.let { weaponSprite!!.moveTo(wX, wY, time = 100.milliseconds) }
+            }
+            Direction.LEFT -> {
+                weapon?.let { weaponSprite!!.rotateTo(angle = wAngle!! - it.hitAngle, time = 150.milliseconds) }
+                weapon?.let { weaponSprite!!.rotateTo(angle = wAngle!!, time = 100.milliseconds) }
+            }
+            Direction.RIGHT -> {
+                weapon?.let { weaponSprite!!.rotateTo(angle = wAngle!! + it.hitAngle, time = 150.milliseconds) }
+                weapon?.let { weaponSprite!!.rotateTo(angle = wAngle!!, time = 100.milliseconds) }
+            }
+        }
+
         isMoving = false
     }
 
-    fun flipX() {
-        weaponSprite?. let { it.skewX += (currentDirection * 180).degrees }
-        weaponSprite?.rotation(180.degrees - weaponSprite.rotation)
+    fun changeDirection(direction: Direction) {
+        var direction = when (direction) {
+            Direction.UP -> when (currentDirection) {
+                Direction.LEFT       -> Direction.UP_LEFT
+                Direction.RIGHT      -> Direction.UP_RIGHT
+                Direction.DOWN_LEFT  -> Direction.UP_LEFT
+                Direction.DOWN_RIGHT -> Direction.UP_RIGHT
+                else                 -> currentDirection
+            }
+            Direction.DOWN -> when (currentDirection) {
+                Direction.LEFT     -> Direction.DOWN_LEFT
+                Direction.RIGHT    -> Direction.DOWN_RIGHT
+                Direction.UP_LEFT  -> Direction.DOWN_LEFT
+                Direction.UP_RIGHT -> Direction.DOWN_RIGHT
+                else               -> currentDirection
+            }
+            else -> direction
+        }
+
+        if (currentDirection.side() != direction.side()) {
+            characterSprite.skewY += (180).degrees
+        }
+
+        weaponSprite?.rotation(
+            weapon!!.getWeaponAngle(direction)
+        )
         weaponSprite?.position(
-            weapon!!.getWeaponPosition(x, y, -currentDirection).first,
-            weapon!!.getWeaponPosition(x, y, -currentDirection).second
+            weapon!!.getWeaponPosition(x, y, direction).first,
+            weapon!!.getWeaponPosition(x, y, direction).second
         )
 
-        characterSprite.skewX += (currentDirection * 180).degrees
-        characterSprite.rotation(((currentDirection == 1).toInt() * 180).degrees)
-
-        currentDirection *= -1
+        currentDirection = direction
     }
 }

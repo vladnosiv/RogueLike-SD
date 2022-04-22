@@ -42,15 +42,7 @@ class Game(private val ui: view.UI,
                 is HeroPlaced           -> heroUIRepr.place(action.position.x, action.position.y)
                 is HeroHPChanged        -> ui.displayHp(action.current, action.max)
                 is HeroMoved            -> heroUIRepr.move(action.dx, action.dy)
-                is HeroChangedDirection -> {
-                    when (action.direction) {
-                        model.Direction.UP    -> heroUIRepr.turnUp()
-                        model.Direction.DOWN  -> heroUIRepr.turnDown()
-                        model.Direction.LEFT  -> heroUIRepr.turnLeft()
-                        model.Direction.RIGHT -> heroUIRepr.turnRight()
-                        else -> continue
-                    }
-                }
+                is HeroChangedDirection -> heroUIRepr.turn(viewDirection(action.direction))
                 is HeroAttacked         -> heroUIRepr.hit()
                 is MobCreated           -> {
                     mobsReprs.put(action.actor, ui.createMobRepr())
@@ -69,6 +61,15 @@ class Game(private val ui: view.UI,
                     })
                 }
             }
+        }
+    }
+
+    private fun viewDirection(direction: model.Direction): view.Direction {
+        return when (direction) {
+            model.Direction.UP   -> view.Direction.UP
+            model.Direction.DOWN -> view.Direction.DOWN
+            model.Direction.LEFT -> view.Direction.LEFT
+            else                 -> view.Direction.RIGHT
         }
     }
 }
