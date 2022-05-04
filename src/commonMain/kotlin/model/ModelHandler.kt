@@ -48,6 +48,14 @@ class ModelHandler {
         return queue.toList()
     }
 
+    fun onEquip(field: Int) {
+
+    }
+
+    fun onThrow() {
+
+    }
+
     private fun handleAction(action: Action): List<Action> {
         return when (action) { // TODO("Other actions")
             is MobMoved -> {
