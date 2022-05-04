@@ -4,12 +4,19 @@ import com.soywiz.korge.input.keys
 import com.soywiz.korge.view.*
 import kotlinx.coroutines.*
 
-val tileSize = 16
-val mapWidth = 32
+val tileSize  = 16
 val mapHeight = 32
+val mapWidth  = 32
+val scale     = 1.5
 
 
-suspend fun main() = Korge(width = tileSize * mapWidth, height = tileSize * mapHeight) {
+suspend fun main() = Korge(
+    title = "Rogue-like",
+    height = (tileSize * mapHeight * scale).toInt(),
+    width = (tileSize * mapWidth * scale).toInt(),
+    virtualHeight = tileSize * mapHeight,
+    virtualWidth = tileSize * mapWidth
+) {
     val camera          = this.camera()
     val ui              = view.UI(camera)
     val modelHandler    = model.ModelHandler()
