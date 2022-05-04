@@ -11,6 +11,10 @@ class UI(camera: Camera) {
     private val actorsContainer = camera.container()
     private val statusBarContainer = camera.container()
     private val statusBar = StatusBar(statusBarContainer)
+    private val statusEventHandler = object: StatusEventHandler {
+        override fun selectInventoryCell(index: Int) = statusBar.selectCell(index)
+        override fun displayHP(hp: Int, maxHP: Int) = statusBar.displayHP(hp, maxHP)
+    }
 
     interface EventHandler
 
@@ -23,6 +27,11 @@ class UI(camera: Camera) {
 
     interface MapEventHandler: EventHandler {
         fun fill(field: List<List<Tile>>)
+    }
+
+    interface StatusEventHandler: EventHandler {
+        fun selectInventoryCell(index: Int)
+        fun displayHP(hp: Int, maxHP: Int)
     }
 
     private fun createActorRepr(character: view.sprites.CharacterSprite,
@@ -43,7 +52,5 @@ class UI(camera: Camera) {
         override fun fill(field: List<List<Tile>>) = map.draw(field)
     }
 
-    fun displayHp(hp: Int, maxHp: Int) {
-        statusBar.displayHP(hp, maxHp)
-    }
+    fun getStatusRepr() = statusEventHandler
 }

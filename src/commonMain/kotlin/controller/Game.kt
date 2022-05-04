@@ -9,9 +9,10 @@ class Game(private val ui: view.UI,
            private val logic: model.ModelHandler,
            private val commands: KeyboardHandler) {
 
-    private val mapUIRepr = ui.createMapRepr()
-    private val heroUIRepr = ui.createHeroRepr()
-    private val mobsReprs = HashMap<model.actors.Actor, view.UI.ActorEventHandler>()
+    private val statusUIRepr = ui.getStatusRepr()
+    private val mapUIRepr    = ui.createMapRepr()
+    private val heroUIRepr   = ui.createHeroRepr()
+    private val mobsUIReprs  = HashMap<model.actors.Actor, view.UI.ActorEventHandler>()
 
     init {
         GlobalScope.launch{ tick() }
@@ -30,11 +31,26 @@ class Game(private val ui: view.UI,
                 Command.MOVE_LEFT    -> logic.onMove(model.Direction.LEFT)
                 Command.MOVE_RIGHT   -> logic.onMove(model.Direction.RIGHT)
                 // ʘ‿ʘ
-                Command.SELECT_ITEM1 -> logic.onEquip(1)
-                Command.SELECT_ITEM2 -> logic.onEquip(2)
-                Command.SELECT_ITEM3 -> logic.onEquip(3)
-                Command.SELECT_ITEM4 -> logic.onEquip(4)
-                Command.SELECT_ITEM5 -> logic.onEquip(5)
+                Command.SELECT_ITEM0 -> {
+                    statusUIRepr.selectInventoryCell(0)
+                    logic.onEquip(0)
+                }
+                Command.SELECT_ITEM1 -> {
+                    statusUIRepr.selectInventoryCell(1)
+                    logic.onEquip(1)
+                }
+                Command.SELECT_ITEM2 -> {
+                    statusUIRepr.selectInventoryCell(2)
+                    logic.onEquip(2)
+                }
+                Command.SELECT_ITEM3 -> {
+                    statusUIRepr.selectInventoryCell(3)
+                    logic.onEquip(3)
+                }
+                Command.SELECT_ITEM4 -> {
+                    statusUIRepr.selectInventoryCell(4)
+                    logic.onEquip(4)
+                }
                 Command.ATTACK       -> logic.onAttack()
                 // TODO: Command.PICK_UP      -> logic.
                 Command.THROW        -> logic.onThrow()
@@ -48,16 +64,16 @@ class Game(private val ui: view.UI,
             println(action::class.simpleName)
             when (action) {
                 is HeroPlaced           -> heroUIRepr.place(action.position.x, action.position.y)
-                is HeroHPChanged        -> ui.displayHp(action.current, action.max)
+                is HeroHPChanged        -> statusUIRepr.displayHP(action.current, action.max)
                 is HeroMoved            -> heroUIRepr.move(action.dx, action.dy)
                 is HeroChangedDirection -> heroUIRepr.turn(viewDirection(action.direction))
                 is HeroAttacked         -> heroUIRepr.hit()
                 is MobCreated           -> {
-                    mobsReprs.put(action.actor, ui.createMobRepr())
-                    mobsReprs.get(action.actor)?.place(action.position.x, action.position.y)
+                    mobsUIReprs.put(action.actor, ui.createMobRepr())
+                    mobsUIReprs.get(action.actor)?.place(action.position.x, action.position.y)
                 }
-                is MobAttacked          -> mobsReprs.get(action.actor)?.hit()
-                is MobMoved             -> mobsReprs.get(action.actor)?.move(action.dx, action.dy)
+                is MobAttacked          -> mobsUIReprs.get(action.actor)?.hit()
+                is MobMoved             -> mobsUIReprs.get(action.actor)?.move(action.dx, action.dy)
                 is MapChanged           -> {
                     mapUIRepr.fill(action.field.map { row ->
                         row.map { tile ->

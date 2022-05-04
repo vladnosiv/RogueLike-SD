@@ -42,17 +42,19 @@ object TileAnimation {
     )
 
     object UI {
-        val FullHeart = getAnimation("ui_heart_full")
-        val HalfHeart = getAnimation("ui_heart_half")
+        val FullHeart  = getAnimation("ui_heart_full")
+        val HalfHeart  = getAnimation("ui_heart_half")
         val EmptyHeart = getAnimation("ui_heart_empty")
 
-        val Crate = getAnimation("crate")
-        val RedButtonOff = getAnimation("red_button_off")
+        val RedButtonOff  = getAnimation("red_button_off")
+        val BlueButtonOff = getAnimation("blue_button_off")
     }
 
     object Map {
         fun getFloor() = getAnimation("floor_${Random.nextInt(1, 4)}")
-        val wall = getAnimation("wall_mid")
+
+        val Crate = getAnimation("crate")
+        val Wall = getAnimation("wall_mid")
     }
 
     object Characters {
