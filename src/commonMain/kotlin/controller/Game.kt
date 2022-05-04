@@ -25,11 +25,19 @@ class Game(private val ui: view.UI,
     suspend private fun handleCommands() {
         for (cmd: Command in commands.getAll()) {
             when (cmd) {
-                Command.MOVE_UP    -> logic.onMove(model.Direction.UP)
-                Command.MOVE_DOWN  -> logic.onMove(model.Direction.DOWN)
-                Command.MOVE_LEFT  -> logic.onMove(model.Direction.LEFT)
-                Command.MOVE_RIGHT -> logic.onMove(model.Direction.RIGHT)
-                Command.ATTACK     -> logic.onAttack()
+                Command.MOVE_UP      -> logic.onMove(model.Direction.UP)
+                Command.MOVE_DOWN    -> logic.onMove(model.Direction.DOWN)
+                Command.MOVE_LEFT    -> logic.onMove(model.Direction.LEFT)
+                Command.MOVE_RIGHT   -> logic.onMove(model.Direction.RIGHT)
+                // ʘ‿ʘ
+                Command.SELECT_ITEM1 -> logic.onEquip(1)
+                Command.SELECT_ITEM2 -> logic.onEquip(2)
+                Command.SELECT_ITEM3 -> logic.onEquip(3)
+                Command.SELECT_ITEM4 -> logic.onEquip(4)
+                Command.SELECT_ITEM5 -> logic.onEquip(5)
+                Command.ATTACK       -> logic.onAttack()
+                // TODO: Command.PICK_UP      -> logic.
+                Command.THROW        -> logic.onThrow()
             }
         }
         commands.clear()
