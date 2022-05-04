@@ -19,9 +19,9 @@ class FearfulStrategy(override val environment: Environment) : Strategy {
         for (direction in Direction.values()) {
             val pos = mobPos + direction
             if (environment.map.canStep(pos) && (pos - heroPos).abs() > dist) {
-                mob.position += direction
+//                mob.position += direction
                 return listOf(
-                    MobMoved(mob, direction.deltaX, direction.deltaY)
+                    MobMoved(mob, direction.deltaX, direction.deltaY, direction)
                 )
             }
         }

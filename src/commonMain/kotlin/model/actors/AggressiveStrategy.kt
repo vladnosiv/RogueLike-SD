@@ -24,9 +24,9 @@ class AggressiveStrategy(override val environment: Environment) : Strategy {
                 )
             }
             if (environment.map.canStep(pos) && (pos - heroPos).abs() < dist) {
-                mob.position += direction
+//                mob.position += direction
                 return listOf(
-                    MobMoved(mob, direction.deltaX, direction.deltaY)
+                    MobMoved(mob, direction.deltaX, direction.deltaY, direction)
                 )
             }
         }
