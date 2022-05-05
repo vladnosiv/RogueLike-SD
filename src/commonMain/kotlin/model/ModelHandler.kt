@@ -85,6 +85,11 @@ class ModelHandler {
             is MobKilled -> {
                 logic.environment.mobs.remove(action.mob)
                 logic.environment.map.getTile(action.mob.position).actor = null
+
+                val hero = logic.environment.mainCharacter
+
+                hero.addExp(action.mob.keepExp)
+
                 emptyList()
             }
             else -> emptyList()

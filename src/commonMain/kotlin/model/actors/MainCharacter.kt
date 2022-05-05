@@ -7,6 +7,7 @@ import model.actions.*
 // class for main character
 class MainCharacter(position: Position, hp: Int, power: Int, var exp: Int) : Actor(position, hp, power) {
     var direction = Direction.RIGHT
+    var lvl = 0
 
     fun makeMove(direction: Direction): List<Action> {
         return if (this.direction != direction) {
@@ -19,6 +20,22 @@ class MainCharacter(position: Position, hp: Int, power: Int, var exp: Int) : Act
         } else {
             position += direction
             listOf(HeroMoved(direction.deltaX, direction.deltaY))
+        }
+    }
+
+    private fun enoughExp(): Boolean {
+        return exp >= (2 shl lvl)
+    }
+
+    private fun lvlUp() {
+        power++
+        lvl++
+    }
+
+    fun addExp(value: Int) {
+        exp += value
+        while (enoughExp()) {
+            lvlUp()
         }
     }
 

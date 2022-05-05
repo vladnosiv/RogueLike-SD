@@ -5,7 +5,8 @@ import model.Position
 import model.actions.*
 
 // class that stores information about a mob
-class Mob(position: Position, hp: Int, power: Int, var strategy: Strategy) : Actor(position, hp, power) {
+class Mob(position: Position, hp: Int, power: Int, val keepExp: Int, var strategy: Strategy) :
+    Actor(position, hp, power) {
     var direction = Direction.RIGHT
 
     private fun applyMove(direction: Direction): List<Action> {
