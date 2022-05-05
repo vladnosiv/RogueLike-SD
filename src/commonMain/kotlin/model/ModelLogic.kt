@@ -41,7 +41,7 @@ class ModelLogic {
 
         val mobs = mutableListOf<Mob>()
         for (config in configs) {
-            val mob = Mob(config.position, config.hp, config.power, config.strategy)
+            val mob = Mob(config.position, config.hp, config.power, 1, config.strategy)
             actions.addAll(map.createMob(config.position, mob))
             mobs.add(mob)
         }
