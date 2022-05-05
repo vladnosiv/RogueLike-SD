@@ -17,6 +17,7 @@ class ModelLogic {
         val mainCharacter = MainCharacter(
             mainCharacterConfig.position,
             mainCharacterConfig.hp,
+            mainCharacterConfig.power,
             mainCharacterConfig.exp
         )
         environment = Environment(
@@ -40,7 +41,7 @@ class ModelLogic {
 
         val mobs = mutableListOf<Mob>()
         for (config in configs) {
-            val mob = Mob(config.position, config.hp, config.strategy)
+            val mob = Mob(config.position, config.hp, config.power, config.strategy)
             actions.addAll(map.createMob(config.position, mob))
             mobs.add(mob)
         }

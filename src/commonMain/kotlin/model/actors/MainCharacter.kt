@@ -2,13 +2,10 @@ package model.actors
 
 import model.Direction
 import model.Position
-import model.actions.Action
-import model.actions.HeroAttacked
-import model.actions.HeroChangedDirection
-import model.actions.HeroMoved
+import model.actions.*
 
 // class for main character
-class MainCharacter(position: Position, hp: Int, var exp: Int) : Actor(position, hp) {
+class MainCharacter(position: Position, hp: Int, power: Int, var exp: Int) : Actor(position, hp, power) {
     var direction = Direction.RIGHT
 
     fun makeMove(direction: Direction): List<Action> {
@@ -41,5 +38,21 @@ class MainCharacter(position: Position, hp: Int, var exp: Int) : Actor(position,
         } else {
             listOf(HeroAttacked(direction))
         }
+    }
+
+    override fun onAttack(power: Int): List<Action> {
+        val actions = mutableListOf<Action>()
+        actions.add(HeroDamaged(power))
+        hp -= power
+        if (hp <= 0) {
+            actions.addAll(onKill())
+        }
+        return actions
+    }
+
+    override fun onKill(): List<Action> {
+        return listOf(
+            HeroKilled()
+        )
     }
 }
