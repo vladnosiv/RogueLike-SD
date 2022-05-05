@@ -1,6 +1,7 @@
 package model
 
 import model.actions.*
+import model.effects.EffectType
 import java.util.*
 import java.util.concurrent.ConcurrentLinkedQueue
 import kotlin.collections.ArrayList
@@ -73,6 +74,10 @@ class ModelHandler {
                 val pos = hero.position + action.direction
                 val actor = logic.environment.map.getTile(pos).actor
 
+                if (actor != null) {
+                    val effect = logic.environment.effectFactory.getEffect(EffectType.CONFUSION)
+                    effect.applyToActor(actor)
+                }
                 actor?.onAttack(hero.power) ?: emptyList()
             }
             is MobAttacked -> {
