@@ -55,11 +55,17 @@ class ModelHandler {
     }
 
     fun onEquip(field: Int) {
-
+        val hero = logic.environment.mainCharacter
+        actions.addAll(
+            hero.equip(field)
+        )
     }
 
     fun onThrow() {
-
+        val hero = logic.environment.mainCharacter
+        actions.addAll(
+            hero.throwFromHand(logic.environment.map)
+        )
     }
 
     private fun handleAction(action: Action): List<Action> {

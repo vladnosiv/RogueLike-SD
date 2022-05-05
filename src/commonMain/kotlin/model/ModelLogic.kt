@@ -3,6 +3,7 @@ package model
 import model.actions.*
 import model.actors.MainCharacter
 import model.actors.Mob
+import model.items.Sword
 
 // the class that stores the environment
 class ModelLogic {
@@ -20,6 +21,13 @@ class ModelLogic {
             mainCharacterConfig.power,
             mainCharacterConfig.exp
         )
+
+        val actions = mutableListOf<Action>()
+        actions.let {
+            it.addAll(mainCharacter.addItem(Sword()))
+            it.addAll(mainCharacter.equip(0))
+        }
+
         environment = Environment(
             map,
             mainCharacter
@@ -28,7 +36,7 @@ class ModelLogic {
 
 //        environment.map.getTile(mainCharacterConfig.position).actor = environment.mainCharacter
 
-        val actions = environment.map.createMainCharacter(mainCharacterConfig.position, mainCharacter).toMutableList()
+        actions.addAll(environment.map.createMainCharacter(mainCharacterConfig.position, mainCharacter).toMutableList())
         actions.addAll(
             listOf(
                 MapChanged(map.field),
@@ -69,8 +77,7 @@ class ModelLogic {
             val actions = environment.map.moveActor(position, position + direction).toMutableList()
             actions.addAll(environment.mainCharacter.makeMove(direction))
             return actions
-        }
-        else {
+        } else {
 //            val actions = environment.map.moveActor(position, position + direction).toMutableList()
             val actions = mutableListOf<Action>()
             actions.addAll(environment.mainCharacter.attack(direction))
