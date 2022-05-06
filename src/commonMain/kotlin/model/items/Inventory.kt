@@ -27,9 +27,9 @@ class Inventory {
         }
 
         return if (item.isEquipped) {
-            item.onEquip(hero)
-        } else {
             item.onUnEquip(hero)
+        } else {
+            item.onEquip(hero)
         }
     }
 
