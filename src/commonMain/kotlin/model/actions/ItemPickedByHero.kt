@@ -1,3 +1,3 @@
 package model.actions
 
-class ItemPickedByHero: Action
+class ItemPickedByHero(val pos: Int) : Action

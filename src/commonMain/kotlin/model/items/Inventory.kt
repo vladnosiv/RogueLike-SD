@@ -11,7 +11,7 @@ class Inventory {
             if (items[i] is NullItem) {
                 items[i] = item
                 return listOf(
-                    ItemPickedByHero(),
+                    ItemPickedByHero(i),
                     ItemAdded(i, item)
                 )
             }
