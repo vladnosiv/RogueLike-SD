@@ -4,9 +4,11 @@ import model.Direction
 import model.Position
 import model.actions.Action
 import model.actions.HeroPlaced
+import model.actions.ItemCreated
 import model.actions.MobCreated
 import model.actors.MainCharacter
 import model.actors.Mob
+import model.items.Item
 
 // class that stores a map of tiles
 data class Map(val field: List<List<Tile>>) {
@@ -29,6 +31,19 @@ data class Map(val field: List<List<Tile>>) {
         assert(toTile.actor != null)
 
         return emptyList()
+    }
+
+    fun createItem(pos: Position, item: Item): List<Action> {
+        assert(isPositionOnField(pos))
+
+        val tile = getTile(pos)
+
+        assert(tile.item == null)
+
+        tile.item = item
+        return listOf(
+            ItemCreated(pos, item)
+        )
     }
 
     fun isPositionOnField(position: Position): Boolean {
