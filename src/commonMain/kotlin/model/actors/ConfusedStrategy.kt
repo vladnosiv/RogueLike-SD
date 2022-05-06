@@ -6,19 +6,13 @@ import model.actions.Action
 import model.actions.MobAttacked
 import model.actions.MobMoved
 
-class FearfulStrategy(override val environment: Environment) : Strategy {
+class ConfusedStrategy(override val environment: Environment) : Strategy {
     override fun makeAct(mob: Mob): List<Action> {
         val mobPos = mob.position
-        val heroPos = environment.mainCharacter.position
 
-        val dist = (mobPos - heroPos).abs()
-        if (dist > 5) {
-            return emptyList()
-        }
-
-        for (direction in Direction.values()) {
+        for (direction in Direction.values().shuffled()) {
             val pos = mobPos + direction
-            if (environment.map.canStep(pos) && (pos - heroPos).abs() > dist) {
+            if (environment.map.canStep(pos)) {
 //                mob.position += direction
                 return listOf(
                     MobMoved(mob, direction.deltaX, direction.deltaY, direction)

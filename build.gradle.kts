@@ -24,3 +24,12 @@ korge {
 	id = "com.roguelike"
 	targetJvm()
 }
+kotlin {
+	sourceSets {
+		getByName("commonMain") {
+			dependencies {
+				implementation(kotlin("reflect"))
+			}
+		}
+	}
+}
