@@ -1,3 +1,5 @@
 package model.actions
 
-class ItemPickedByHero(val pos: Int) : Action
+import model.items.Item
+
+class ItemPickedByHero(val pos: Int, val item: Item) : Action
