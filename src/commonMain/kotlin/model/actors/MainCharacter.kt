@@ -30,10 +30,10 @@ class MainCharacter(position: Position, hp: Int, power: Int, var exp: Int) : Act
         }
 
         if(inHand != null) {
-            actions.addAll(inventory.changeEquippedStatus(inHand!!, this))
+            actions.addAll(changeEquippedStatus(inHand!!))
         }
 
-        actions.addAll(inventory.changeEquippedStatus(pos, this))
+        actions.addAll(changeEquippedStatus(pos))
         return actions
     }
 

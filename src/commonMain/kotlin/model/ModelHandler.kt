@@ -68,6 +68,17 @@ class ModelHandler {
         )
     }
 
+    fun onPick() {
+        val hero = logic.environment.mainCharacter
+        val tile = logic.environment.map.getTile(hero.position)
+
+        if (tile.item != null) {
+            actions.addAll(
+                hero.addItem(tile.item!!)
+            )
+        }
+    }
+
     private fun handleAction(action: Action): List<Action> {
         return when (action) { // TODO("Other actions")
             is MobMoved -> {
@@ -100,6 +111,14 @@ class ModelHandler {
                 val hero = logic.environment.mainCharacter
 
                 hero.addExp(action.mob.keepExp)
+
+                emptyList()
+            }
+            is ItemPickedByHero -> {
+                val hero = logic.environment.mainCharacter
+                val tile = logic.environment.map.getTile(hero.position)
+
+                tile.item = null
 
                 emptyList()
             }
