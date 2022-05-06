@@ -3,6 +3,7 @@ package model
 import model.actions.*
 import model.actors.MainCharacter
 import model.actors.Mob
+import model.items.Sword
 
 // the class that stores the environment
 class ModelLogic {
@@ -10,15 +11,29 @@ class ModelLogic {
     var lvl: Int = 0
 
     fun newGame(): List<Action> {
+        val actions = mutableListOf<Action>()
+
         lvl = 1
         val environConfig = EnvironmentConfig(lvl)
         val mainCharacterConfig = environConfig.mainCharacterConfig
         val map = environConfig.generator.genMap()
+
+        for ((pos, item) in environConfig.items) {
+            actions.addAll(map.createItem(pos, item))
+        }
+
         val mainCharacter = MainCharacter(
             mainCharacterConfig.position,
             mainCharacterConfig.hp,
+            mainCharacterConfig.power,
             mainCharacterConfig.exp
         )
+
+        actions.let {
+            it.addAll(mainCharacter.addItem(Sword()))
+            it.addAll(mainCharacter.equip(0))
+        }
+
         environment = Environment(
             map,
             mainCharacter
@@ -27,7 +42,7 @@ class ModelLogic {
 
 //        environment.map.getTile(mainCharacterConfig.position).actor = environment.mainCharacter
 
-        val actions = environment.map.createMainCharacter(mainCharacterConfig.position, mainCharacter).toMutableList()
+        actions.addAll(environment.map.createMainCharacter(mainCharacterConfig.position, mainCharacter).toMutableList())
         actions.addAll(
             listOf(
                 MapChanged(map.field),
@@ -40,7 +55,7 @@ class ModelLogic {
 
         val mobs = mutableListOf<Mob>()
         for (config in configs) {
-            val mob = Mob(config.position, config.hp, config.strategy)
+            val mob = Mob(config.position, config.hp, config.power, 1, config.strategy)
             actions.addAll(map.createMob(config.position, mob))
             mobs.add(mob)
         }
@@ -68,8 +83,7 @@ class ModelLogic {
             val actions = environment.map.moveActor(position, position + direction).toMutableList()
             actions.addAll(environment.mainCharacter.makeMove(direction))
             return actions
-        }
-        else {
+        } else {
 //            val actions = environment.map.moveActor(position, position + direction).toMutableList()
             val actions = mutableListOf<Action>()
             actions.addAll(environment.mainCharacter.attack(direction))
