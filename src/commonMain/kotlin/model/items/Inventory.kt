@@ -11,7 +11,7 @@ class Inventory {
             if (items[i] is NullItem) {
                 items[i] = item
                 return listOf(
-                    ItemPickedByHero(),
+                    ItemPickedByHero(i, item),
                     ItemAdded(i, item)
                 )
             }
@@ -27,9 +27,9 @@ class Inventory {
         }
 
         return if (item.isEquipped) {
-            item.onEquip(hero)
-        } else {
             item.onUnEquip(hero)
+        } else {
+            item.onEquip(hero)
         }
     }
 

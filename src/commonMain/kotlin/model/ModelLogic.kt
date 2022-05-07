@@ -11,10 +11,17 @@ class ModelLogic {
     var lvl: Int = 0
 
     fun newGame(): List<Action> {
+        val actions = mutableListOf<Action>()
+
         lvl = 1
         val environConfig = EnvironmentConfig(lvl)
         val mainCharacterConfig = environConfig.mainCharacterConfig
         val map = environConfig.generator.genMap()
+
+        for ((pos, item) in environConfig.items) {
+            actions.addAll(map.createItem(pos, item))
+        }
+
         val mainCharacter = MainCharacter(
             mainCharacterConfig.position,
             mainCharacterConfig.hp,
@@ -22,7 +29,6 @@ class ModelLogic {
             mainCharacterConfig.exp
         )
 
-        val actions = mutableListOf<Action>()
         actions.let {
             it.addAll(mainCharacter.addItem(Sword()))
             it.addAll(mainCharacter.equip(0))
