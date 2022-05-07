@@ -13,6 +13,7 @@ class Game(private val ui: view.UI,
     private val mapUIRepr    = ui.createMapRepr()
     private val heroUIRepr   = ui.createHeroRepr()
     private val mobsUIReprs  = HashMap<model.actors.Actor, view.UI.ActorEventHandler>()
+    private val itemsUIReprs = HashMap<model.items.Item, view.UI.ItemEventHandler>()
 
     init {
         GlobalScope.launch{ tick() }
@@ -52,7 +53,7 @@ class Game(private val ui: view.UI,
                     logic.onEquip(4)
                 }
                 Command.ATTACK       -> logic.onAttack()
-                // TODO: Command.PICK_UP      -> logic.
+                Command.PICK_UP      -> logic.onPick()
                 Command.THROW        -> logic.onThrow()
             }
         }
@@ -74,6 +75,19 @@ class Game(private val ui: view.UI,
                 }
                 is MobAttacked          -> mobsUIReprs.get(action.actor)?.hit()
                 is MobMoved             -> mobsUIReprs.get(action.actor)?.move(action.dx, action.dy)
+                is MobKilled            -> {
+                    mobsUIReprs.get(action.mob)?.kill()
+                    mobsUIReprs.remove(action.mob)
+                }
+                is ItemCreated          -> {
+                    itemsUIReprs.put(action.item, ui.createItemRepr(viewItemType(action.item.type)))
+                    itemsUIReprs.get(action.item)?.place(action.pos.x, action.pos.y)
+                }
+                is ItemAdded            -> statusUIRepr.putItem(viewItemType(action.item.type), action.pos)
+                is ItemPickedByHero     -> itemsUIReprs.get(action.item)?.remove()
+                is ItemEquipped         -> heroUIRepr.equipItem(viewItemType(action.item.type))
+                is ItemUnEquipped       -> heroUIRepr.unequipItem()
+                is ItemThrown           -> itemsUIReprs.get(action.item)?.place(action.position.x, action.position.y)
                 is MapChanged           -> {
                     mapUIRepr.fill(action.field.map { row ->
                         row.map { tile ->
@@ -94,6 +108,13 @@ class Game(private val ui: view.UI,
             model.Direction.DOWN -> view.Direction.DOWN
             model.Direction.LEFT -> view.Direction.LEFT
             else                 -> view.Direction.RIGHT
+        }
+    }
+
+    private fun viewItemType(itemType: model.items.ItemType): view.ItemType {
+        return when (itemType) {
+            model.items.ItemType.SWORD -> view.ItemType.REGULAR_SWORD
+            else                       -> view.ItemType.NONE
         }
     }
 }

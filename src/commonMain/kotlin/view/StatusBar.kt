@@ -16,7 +16,7 @@ class StatusBar(
     private val hpBar = mutableListOf<Sprite>()
     private val inventoryBar = MutableList(inventorySize) { uiContainer.sprite(TileAnimation.UI.RedButtonOff) }
     private val selectedCell = uiContainer.sprite(TileAnimation.UI.BlueButtonOff)
-    private val inventoryItems = MutableList<Sprite?>(inventorySize) { null }
+    private val inventoryItems = MutableList<Sprite>(inventorySize) { uiContainer.sprite(TileAnimation.UI.Transparent) }
 
     private var x = 0
     private var y = 0
@@ -71,13 +71,13 @@ class StatusBar(
         displayInventory()
     }
 
-    fun addItem(index: Int, spriteAnimation: SpriteAnimation) {
-        inventoryItems.set(index, uiContainer.sprite(spriteAnimation))
+    fun addItem(index: Int, item: ItemType) {
+        inventoryItems[index].playAnimation(item.animatedSprite())
         displayInventory()
     }
 
     fun delItem(index: Int) {
-        inventoryItems.set(index, null)
+        inventoryItems[index].playAnimation(TileAnimation.UI.Transparent)
         displayInventory()
     }
 
@@ -90,10 +90,10 @@ class StatusBar(
         selectedCell.position(startX + 16 * selectedPos, 16 * y)
         selectedCell.playAnimation()
         for (i in 0 until inventoryItems.size) {
-            inventoryItems[i]?.anchor(0.5, 0.0)
-            inventoryItems[i]?.position(startX + 16 * (i + 1), 16 * y)
-            inventoryItems[i]?.rotation(45.degrees)
-            inventoryItems[i]?.playAnimation()
+            inventoryItems[i].anchor(0.5, 0.0)
+            inventoryItems[i].position(startX + 16 * (i + 1), 16 * y)
+            inventoryItems[i].rotation(45.degrees)
+            inventoryItems[i].playAnimation()
         }
     }
 

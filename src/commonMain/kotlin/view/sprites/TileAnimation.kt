@@ -48,6 +48,7 @@ object TileAnimation {
 
         val RedButtonOff  = getAnimation("red_button_off")
         val BlueButtonOff = getAnimation("blue_button_off")
+        val Transparent   = getAnimation("transparent")
     }
 
     object Map {
