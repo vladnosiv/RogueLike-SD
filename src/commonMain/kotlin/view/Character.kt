@@ -64,19 +64,12 @@ class Character(
         if (isMoving) {
             return
         }
+
         isMoving = true
         x += dx
         y += dy
+
         characterSprite.playAnimationLooped(character.run, spriteDisplayTime = character.runDuration)
-        weaponContainer.animateParallel {
-            parallel {
-                weaponSprite.moveTo(
-                    weapon.getWeaponPosition(x, y, currentDirection).first,
-                    weapon.getWeaponPosition(x, y, currentDirection).second,
-                    time = character.runDuration
-                )
-            }
-        }
         charContainer.animateParallel {
             parallel {
                 characterSprite.moveTo(
@@ -85,8 +78,16 @@ class Character(
                     time = character.runDuration
                 )
             }
+            parallel {
+                weaponSprite.moveTo(
+                    weapon.getWeaponPosition(x, y, currentDirection).first,
+                    weapon.getWeaponPosition(x, y, currentDirection).second,
+                    time = character.runDuration
+                )
+            }
         }
         characterSprite.playAnimationLooped(character.idle, spriteDisplayTime = character.idleDuration)
+
         isMoving = false
     }
 
