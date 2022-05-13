@@ -25,14 +25,17 @@ class Confusion(environment: Environment) : AbstractEffect(environment) {
 
     override fun onFinish(): List<Action> {
         mob.strategy = prevStrategy
+        mob.effects.remove(EffectType.CONFUSION)
         return listOf(
             EffectFinished(this)
         )
     }
 
     override fun applyToActor(actor: Actor) {
-        if (actor is Mob) {
+        if (actor is Mob && !actor.effects.contains(EffectType.CONFUSION)) {
             mob = actor
+            mob.effects.add(EffectType.CONFUSION)
+
             prevStrategy = mob.strategy
 
             environment.timer.addTask (0) {

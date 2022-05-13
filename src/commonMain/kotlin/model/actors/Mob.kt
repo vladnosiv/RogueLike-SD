@@ -14,7 +14,7 @@ class Mob(position: Position, hp: Int, power: Int, val keepExp: Int, var strateg
             this.direction = direction
             position += direction
             listOf(
-                MobChangedDirection(direction),
+                MobChangedDirection(this, direction),
                 MobMoved(this, direction.deltaX, direction.deltaY, direction)
             )
         } else {
