@@ -75,6 +75,7 @@ class Game(private val ui: view.UI,
                 }
                 is MobAttacked          -> mobsUIReprs.get(action.actor)?.hit()
                 is MobMoved             -> mobsUIReprs.get(action.actor)?.move(action.dx, action.dy)
+                is MobChangedDirection  -> mobsUIReprs.get(action.mob)?.turn(viewDirection(action.direction))
                 is MobKilled            -> {
                     mobsUIReprs.get(action.mob)?.kill()
                     mobsUIReprs.remove(action.mob)
