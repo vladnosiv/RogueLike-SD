@@ -10,7 +10,7 @@ enum class TileType {
     },
 
     WALL {
-        override fun animatedSprite() = TileAnimation.Map.wall
+        override fun animatedSprite() = TileAnimation.Map.Wall
     };
 
     abstract fun animatedSprite(): SpriteAnimation

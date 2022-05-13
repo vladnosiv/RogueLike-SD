@@ -1,16 +1,26 @@
 package view
 
-import com.soywiz.korge.view.Camera
-import com.soywiz.korge.view.container
+import com.soywiz.korge.view.*
+import com.soywiz.korma.geom.*
+import view.sprites.CharacterSprite
 import view.sprites.TileAnimation
 
 
 class UI(camera: Camera) {
 
-    private val mapContainer = camera.container()
-    private val actorsContainer = camera.container()
+    private val mapContainer       = camera.container()
+    private val itemsContainer     = camera.container()
+    private val actorsContainer    = camera.container()
+    private val weaponsContainer   = camera.container()
     private val statusBarContainer = camera.container()
-    private val statusBar = StatusBar(statusBarContainer)
+    
+    private val statusBar          = StatusBar(statusBarContainer)
+    private val statusEventHandler = object: StatusEventHandler {
+        override fun selectInventoryCell(index: Int)         = statusBar.selectCell(index)
+        override fun displayHP(hp: Int, maxHP: Int)          = statusBar.displayHP(hp, maxHP)
+        override fun putItem(itemType: ItemType, index: Int) = statusBar.addItem(index, itemType)
+        override fun removeItem(index: Int)                  = statusBar.delItem(index)
+    }
 
     interface EventHandler
 
@@ -19,31 +29,64 @@ class UI(camera: Camera) {
         fun turn(direction: Direction)
         fun place(x: Int, y: Int)
         suspend fun hit()
+        fun equipItem(itemType: ItemType)
+        fun unequipItem()
+        fun kill()
+    }
+
+    interface ItemEventHandler: EventHandler {
+        fun place(x: Int, y: Int)
+        fun remove()
     }
 
     interface MapEventHandler: EventHandler {
         fun fill(field: List<List<Tile>>)
     }
 
-    private fun createActorRepr(character: view.sprites.CharacterSprite,
-                                weapon: view.sprites.Weapon) = object: ActorEventHandler {
-        val actor = Character(actorsContainer, character, weapon)
-        override suspend fun move(dx: Int, dy: Int) = actor.changePosition(dx, dy)
-        override fun turn(direction: Direction) = actor.changeDirection(direction)
-        override fun place(x: Int, y: Int) = actor.setPosition(x, y)
-        override suspend fun hit() = actor.hit()
+    interface StatusEventHandler: EventHandler {
+        fun selectInventoryCell(index: Int)
+        fun displayHP(hp: Int, maxHP: Int)
+        fun putItem(itemType: ItemType, index: Int)
+        fun removeItem(index: Int)
     }
 
-    fun createHeroRepr() = createActorRepr(TileAnimation.Characters.Knight, TileAnimation.Weapons.RegularSword)
+    private fun createActorRepr(character: CharacterSprite) = object: ActorEventHandler {
+        val actor = Character(actorsContainer, weaponsContainer, character)
 
-    fun createMobRepr() = createActorRepr(TileAnimation.Characters.OrcWarrior, TileAnimation.Weapons.Axe)
+        override suspend fun move(dx: Int, dy: Int) = actor.changePosition(dx, dy)
+        override fun turn(direction: Direction)     = actor.changeDirection(direction)
+        override fun place(x: Int, y: Int)          = actor.setPosition(x, y)
+        override suspend fun hit()                  = actor.hit()
+        override fun equipItem(itemType: ItemType)  = actor.setWeapon(itemType)
+        override fun unequipItem()                  = actor.removeWeapon()
+        override fun kill()                         = actor.remove()
+    }
+
+    fun createHeroRepr() = createActorRepr(TileAnimation.Characters.Knight)
+
+    fun createMobRepr(): ActorEventHandler {
+        var mobRepr = createActorRepr(TileAnimation.Characters.OrcWarrior)
+        mobRepr.equipItem(ItemType.AXE)
+        return mobRepr
+    }
+
+    fun createItemRepr(itemType: ItemType) = object: ItemEventHandler {
+        val itemType = itemType 
+        val sprite   = itemsContainer.sprite(TileAnimation.UI.Transparent)
+
+        override fun place(x: Int, y: Int) {
+            println(x.toString() + " " + y.toString())
+            sprite.position(16 * x + 10, 16 * y - 4)
+            sprite.rotation(45.degrees)
+            sprite.playAnimation(itemType.animatedSprite())
+        }
+        override fun remove() = sprite.playAnimation(TileAnimation.UI.Transparent)
+    }
 
     fun createMapRepr() = object: MapEventHandler {
         val map = Map(mapContainer)
         override fun fill(field: List<List<Tile>>) = map.draw(field)
     }
 
-    fun displayHp(hp: Int, maxHp: Int) {
-        statusBar.displayHP(hp, maxHp)
-    }
+    fun getStatusRepr() = statusEventHandler
 }

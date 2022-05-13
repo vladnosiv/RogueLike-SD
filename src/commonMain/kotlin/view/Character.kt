@@ -7,32 +7,42 @@ import com.soywiz.korge.view.*
 import com.soywiz.korge.view.tween.moveTo
 import com.soywiz.korge.view.tween.rotateTo
 import com.soywiz.korma.geom.*
+import view.sprites.TileAnimation
 import view.sprites.CharacterSprite
 import view.sprites.Weapon
 
 
 class Character(
-    private val container: Container,
+    private val charContainer: Container,
+    private val weaponContainer: Container,
     private val character: CharacterSprite,
-    private var weapon: Weapon? = null
+    private var weapon: Weapon = Weapon(TileAnimation.UI.Transparent)
 ) {
-    private val characterSprite = container.sprite(character.idle).also {
+    private val characterSprite = charContainer.sprite(character.idle).also {
         it.playAnimationLooped(spriteDisplayTime = character.idleDuration)
     }
-
-    private val weaponSprite = weapon?.let { container.sprite(it.sprite).rotation(it.defaultAngle) }
-
-    private var currentDirection = Direction.RIGHT
+    private val weaponSprite = weapon.let { weaponContainer.sprite(it.sprite).rotation(it.defaultAngle) }
 
     private var x = 0
     private var y = 0
+    private var currentDirection = Direction.RIGHT
+    private var onMap = true;
 
     @Volatile private var isMoving = false
 
-    fun setWeapon(newWeapon: Weapon) {
-        if (!isMoving) {
-            weapon = newWeapon
+    fun setWeapon(newWeapon: ItemType) {
+        while (isMoving) {
         }
+
+        weapon.sprite = newWeapon.animatedSprite()
+        weaponSprite.playAnimation(weapon.sprite)
+    }
+
+    fun removeWeapon() {
+        while (isMoving) { }
+
+        weapon.sprite = TileAnimation.UI.Transparent
+        weaponSprite.playAnimation(weapon.sprite)
     }
 
     fun setPosition(newX: Int, newY: Int) {
@@ -42,30 +52,25 @@ class Character(
             character.getPosition(x, y).first,
             character.getPosition(x, y).second
         )
-        weaponSprite?.position(
-            weapon!!.getWeaponPosition(x, y, currentDirection).first,
-            weapon!!.getWeaponPosition(x, y, currentDirection).second
+        weaponSprite.position(
+            weapon.getWeaponPosition(x, y, currentDirection).first,
+            weapon.getWeaponPosition(x, y, currentDirection).second
         )
         characterSprite.anchor(0.5, 1.0)
-        weaponSprite?.anchor(0.5, 1.0)
+        weaponSprite.anchor(0.5, 1.0)
     }
 
     suspend fun changePosition(dx: Int, dy: Int) {
         if (isMoving) {
             return
         }
+
         isMoving = true
         x += dx
         y += dy
+
         characterSprite.playAnimationLooped(character.run, spriteDisplayTime = character.runDuration)
-        container.animateParallel {
-            parallel {
-                weaponSprite?.moveTo(
-                    weapon!!.getWeaponPosition(x, y, currentDirection).first,
-                    weapon!!.getWeaponPosition(x, y, currentDirection).second,
-                    time = character.runDuration
-                )
-            }
+        charContainer.animateParallel {
             parallel {
                 characterSprite.moveTo(
                     character.getPosition(x, y).first,
@@ -73,8 +78,16 @@ class Character(
                     time = character.runDuration
                 )
             }
+            parallel {
+                weaponSprite.moveTo(
+                    weapon.getWeaponPosition(x, y, currentDirection).first,
+                    weapon.getWeaponPosition(x, y, currentDirection).second,
+                    time = character.runDuration
+                )
+            }
         }
         characterSprite.playAnimationLooped(character.idle, spriteDisplayTime = character.idleDuration)
+
         isMoving = false
     }
 
@@ -84,25 +97,25 @@ class Character(
         }
         isMoving = true
 
-        val wAngle = weaponSprite?.rotation
-        val wX = weapon?.getWeaponPosition!!.invoke(x, y, currentDirection).first
-        val wY = weapon?.getWeaponPosition!!.invoke(x, y, currentDirection).second
+        val wAngle = weaponSprite.rotation
+        val wX = weapon.getWeaponPosition.invoke(x, y, currentDirection).first
+        val wY = weapon.getWeaponPosition.invoke(x, y, currentDirection).second
         when (currentDirection) {
             Direction.UP_LEFT, Direction.UP_RIGHT -> {
-                weapon?.let { weaponSprite!!.moveTo(wX, wY - it.hitDistance, time = 100.milliseconds) }
-                weapon?.let { weaponSprite!!.moveTo(wX, wY, time = 100.milliseconds) }
+                weapon.let { weaponSprite.moveTo(wX, wY - it.hitDistance, time = 100.milliseconds) }
+                weapon.let { weaponSprite.moveTo(wX, wY, time = 100.milliseconds) }
             }
             Direction.DOWN_LEFT, Direction.DOWN_RIGHT -> {
-                weapon?.let { weaponSprite!!.moveTo(wX, wY + it.hitDistance, time = 100.milliseconds) }
-                weapon?.let { weaponSprite!!.moveTo(wX, wY, time = 100.milliseconds) }
+                weapon.let { weaponSprite.moveTo(wX, wY + it.hitDistance, time = 100.milliseconds) }
+                weapon.let { weaponSprite.moveTo(wX, wY, time = 100.milliseconds) }
             }
             Direction.LEFT -> {
-                weapon?.let { weaponSprite!!.rotateTo(angle = wAngle!! - it.hitAngle, time = 150.milliseconds) }
-                weapon?.let { weaponSprite!!.rotateTo(angle = wAngle!!, time = 100.milliseconds) }
+                weapon.let { weaponSprite.rotateTo(angle = wAngle - it.hitAngle, time = 150.milliseconds) }
+                weapon.let { weaponSprite.rotateTo(angle = wAngle, time = 100.milliseconds) }
             }
             Direction.RIGHT -> {
-                weapon?.let { weaponSprite!!.rotateTo(angle = wAngle!! + it.hitAngle, time = 150.milliseconds) }
-                weapon?.let { weaponSprite!!.rotateTo(angle = wAngle!!, time = 100.milliseconds) }
+                weapon.let { weaponSprite.rotateTo(angle = wAngle + it.hitAngle, time = 150.milliseconds) }
+                weapon.let { weaponSprite.rotateTo(angle = wAngle, time = 100.milliseconds) }
             }
         }
 
@@ -132,14 +145,21 @@ class Character(
             characterSprite.skewY += (180).degrees
         }
 
-        weaponSprite?.rotation(
-            weapon!!.getWeaponAngle(direction)
+        weaponSprite.rotation(
+            weapon.getWeaponAngle(direction)
         )
-        weaponSprite?.position(
-            weapon!!.getWeaponPosition(x, y, direction).first,
-            weapon!!.getWeaponPosition(x, y, direction).second
+        weaponSprite.position(
+            weapon.getWeaponPosition(x, y, direction).first,
+            weapon.getWeaponPosition(x, y, direction).second
         )
 
         currentDirection = direction
+    }
+
+    fun remove() {
+        while (isMoving) { }
+
+        characterSprite.playAnimation(TileAnimation.UI.Transparent)
+        removeWeapon()
     }
 }

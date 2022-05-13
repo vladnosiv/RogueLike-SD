@@ -8,7 +8,7 @@ import view.Direction
 
 
 data class Weapon(
-    val sprite: SpriteAnimation,
+    var sprite: SpriteAnimation,
     val defaultAngle: Angle = (-30).degrees,
     val hitAngle: Angle = 135.degrees,
     val hitDistance: Int = 6,
