@@ -1,8 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="jar" name="RogueLike-SD-jvm">
     <output-path>$PROJECT_DIR$/build/libs</output-path>
-    <root id="archive" name="RogueLike-SD-jvm.jar">
-      <element id="module-output" name="RogueLike-SD.jvmMain" />
-    </root>
+    <root id="archive" name="RogueLike-SD-jvm.jar" />
   </artifact>
 </component>
