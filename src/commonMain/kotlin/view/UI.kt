@@ -75,9 +75,10 @@ class UI(camera: Camera) {
         val sprite   = itemsContainer.sprite(TileAnimation.UI.Transparent)
 
         override fun place(x: Int, y: Int) {
-            sprite.playAnimation(itemType.animatedSprite())
-            sprite.position(x, y)
+            println(x.toString() + " " + y.toString())
+            sprite.position(16 * x + 10, 16 * y - 4)
             sprite.rotation(45.degrees)
+            sprite.playAnimation(itemType.animatedSprite())
         }
         override fun remove() = sprite.playAnimation(TileAnimation.UI.Transparent)
     }
