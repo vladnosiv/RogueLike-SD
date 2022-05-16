@@ -6,6 +6,10 @@ import model.actors.MainCharacter
 class Inventory {
     private val items = Array<Item>(5) { NullItem() }
 
+    fun getItem(pos: Int): Item {
+        return items[pos]
+    }
+
     fun addItem(item: Item): List<Action> {
         for (i in items.indices) {
             if (items[i] is NullItem) {
@@ -43,6 +47,7 @@ class Inventory {
         val tile = map.getTile(hero.position)
 
         return if (tile.item == null) {
+            items[pos] = NullItem()
             listOf(
                 ItemThrown(item, hero.position)
             )
