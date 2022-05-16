@@ -6,6 +6,7 @@ import model.actions.Action
 import model.actions.MobAttacked
 import model.actions.MobMoved
 
+//mob trying to have at least 5 tiles to hero
 class FearfulStrategy(override val environment: Environment) : Strategy {
     override fun makeAct(mob: Mob): List<Action> {
         val mobPos = mob.position
@@ -19,7 +20,6 @@ class FearfulStrategy(override val environment: Environment) : Strategy {
         for (direction in Direction.values()) {
             val pos = mobPos + direction
             if (environment.map.canStep(pos) && (pos - heroPos).abs() > dist) {
-//                mob.position += direction
                 return listOf(
                     MobMoved(mob, direction.deltaX, direction.deltaY, direction)
                 )

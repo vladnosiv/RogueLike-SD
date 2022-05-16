@@ -3,6 +3,7 @@ package model.items
 import model.actions.*
 import model.actors.MainCharacter
 
+//inventory for main character
 class Inventory {
     private val items = Array<Item>(5) { NullItem() }
 

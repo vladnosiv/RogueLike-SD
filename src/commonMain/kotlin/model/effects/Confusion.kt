@@ -9,6 +9,7 @@ import model.actors.ConfusedStrategy
 import model.actors.Mob
 import model.actors.Strategy
 
+//mob starts moving randomly
 class Confusion(environment: Environment) : AbstractEffect(environment) {
     lateinit var prevStrategy: Strategy
     lateinit var mob: Mob
