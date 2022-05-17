@@ -34,15 +34,7 @@ class ModelLogic {
             it.addAll(mainCharacter.equip(0))
         }
 
-        environment = Environment(
-            map,
-            mainCharacter
-        )
-
-
-//        environment.map.getTile(mainCharacterConfig.position).actor = environment.mainCharacter
-
-        actions.addAll(environment.map.createMainCharacter(mainCharacterConfig.position, mainCharacter).toMutableList())
+        actions.addAll(map.createMainCharacter(mainCharacterConfig.position, mainCharacter))
         actions.addAll(
             listOf(
                 MapChanged(map.field),
@@ -51,16 +43,18 @@ class ModelLogic {
             )
         )
 
-        val configs = environConfig.getMobs(environment)
+        val mobConfigs = environConfig.mobConfigs
 
-        val mobs = mutableListOf<Mob>()
-        for (config in configs) {
-            val mob = Mob(config.position, config.hp, config.power, 1, config.strategy)
-            actions.addAll(map.createMob(config.position, mob))
-            mobs.add(mob)
+        environment = Environment(
+            map,
+            mainCharacter,
+            mobConfigs
+        )
+
+        for (mob in environment.mobs) {
+            actions.addAll(map.createMob(mob.position, mob))
         }
 
-        environment.initMobs(mobs)
         return actions
     }
 

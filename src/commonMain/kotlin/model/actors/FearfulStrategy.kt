@@ -8,6 +8,9 @@ import model.actions.MobMoved
 
 //mob trying to have at least 5 tiles to hero
 class FearfulStrategy(override val environment: Environment) : Strategy {
+    override val type: StrategyType
+        get() = StrategyType.FEARFUL
+
     override fun makeAct(mob: Mob): List<Action> {
         val mobPos = mob.position
         val heroPos = environment.mainCharacter.position

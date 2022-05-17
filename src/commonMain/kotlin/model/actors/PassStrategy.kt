@@ -5,6 +5,9 @@ import model.actions.Action
 
 //doesn't moves
 class PassStrategy(override val environment: Environment) : Strategy {
+    override val type: StrategyType
+        get() = StrategyType.PASSIVE
+
     override fun makeAct(mob: Mob): List<Action> {
         return emptyList()
     }

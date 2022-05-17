@@ -7,6 +7,9 @@ import model.actions.MobAttacked
 import model.actions.MobMoved
 
 class AggressiveStrategy(override val environment: Environment) : Strategy {
+    override val type: StrategyType
+        get() = StrategyType.AGGRESSIVE
+
     override fun makeAct(mob: Mob): List<Action> {
         val mobPos = mob.position
         val heroPos = environment.mainCharacter.position

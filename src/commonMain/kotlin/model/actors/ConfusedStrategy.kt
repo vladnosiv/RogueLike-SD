@@ -8,6 +8,9 @@ import model.actions.MobMoved
 
 //moves randomly
 class ConfusedStrategy(override val environment: Environment) : Strategy {
+    override val type: StrategyType
+        get() = StrategyType.CONFUSED
+
     override fun makeAct(mob: Mob): List<Action> {
         val mobPos = mob.position
 
