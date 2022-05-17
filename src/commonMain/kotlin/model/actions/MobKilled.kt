@@ -1,5 +1,5 @@
 package model.actions
 
-import model.actors.Mob
+import model.actors.mobs.Mob
 
 data class MobKilled(val mob: Mob) : Action

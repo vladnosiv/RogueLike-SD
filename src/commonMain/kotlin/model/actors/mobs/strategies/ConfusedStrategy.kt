@@ -1,13 +1,16 @@
-package model.actors
+package model.actors.mobs.strategies
 
 import model.Direction
 import model.Environment
 import model.actions.Action
-import model.actions.MobAttacked
 import model.actions.MobMoved
+import model.actors.mobs.Mob
 
 //moves randomly
 class ConfusedStrategy(override val environment: Environment) : Strategy {
+    override val type: StrategyType
+        get() = StrategyType.CONFUSED
+
     override fun makeAct(mob: Mob): List<Action> {
         val mobPos = mob.position
 

@@ -5,9 +5,9 @@ import model.actions.Action
 import model.actions.EffectFinished
 import model.actions.EffectStarted
 import model.actors.Actor
-import model.actors.ConfusedStrategy
-import model.actors.Mob
-import model.actors.Strategy
+import model.actors.mobs.strategies.ConfusedStrategy
+import model.actors.mobs.Mob
+import model.actors.mobs.strategies.Strategy
 
 //mob starts moving randomly
 class Confusion(environment: Environment) : AbstractEffect(environment) {
