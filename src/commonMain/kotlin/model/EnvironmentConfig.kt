@@ -1,6 +1,9 @@
 package model
 
 import model.actors.*
+import model.actors.mobs.MobConfig
+import model.actors.mobs.MobType
+import model.actors.mobs.strategies.StrategyType
 import model.items.Item
 import model.items.Sword
 import model.map.FloorMapGenerator
@@ -13,8 +16,8 @@ class EnvironmentConfig(lvl: Int) {
         Pair(Position(15, 15), Sword())
     )
     val mobConfigs = listOf(
-        MobConfig(Position(10, 10), 100, 0, 1, StrategyType.PASSIVE),
-        MobConfig(Position(20, 20), 1, 0, 1, StrategyType.AGGRESSIVE),
-        MobConfig(Position(25, 25), 1, 0, 1, StrategyType.FEARFUL)
+        MobConfig(MobType.ZOMBIE, Position(10, 10), 100, 0, 1, StrategyType.PASSIVE),
+        MobConfig(MobType.SKELETON, Position(20, 20), 1, 0, 1, StrategyType.AGGRESSIVE),
+        MobConfig(MobType.BIG_ZOMBIE, Position(25, 25), 1, 0, 1, StrategyType.FEARFUL)
     )
 }

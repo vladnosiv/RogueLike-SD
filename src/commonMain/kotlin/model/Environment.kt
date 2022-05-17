@@ -1,8 +1,8 @@
 package model
 
 import model.actors.MainCharacter
-import model.actors.Mob
-import model.actors.MobConfig
+import model.actors.mobs.Mob
+import model.actors.mobs.MobConfig
 import model.effects.EffectFactory
 import model.map.Map
 
@@ -13,8 +13,8 @@ class Environment(var map: Map, var mainCharacter: MainCharacter, mobConfigs: Li
     val mobs = mutableListOf<Mob>()
 
     init {
-        for(config in mobConfigs) {
-            mobs.add(Mob(config.position, config.hp, config.hp, config.keepExp, config.strategy.build(this)))
+        for (config in mobConfigs) {
+            mobs.add(config.type.build(config, this))
         }
     }
 }

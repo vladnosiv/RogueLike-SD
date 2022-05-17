@@ -1,7 +1,8 @@
-package model.actors
+package model.actors.mobs.strategies
 
 import model.Environment
 import model.actions.Action
+import model.actors.mobs.Mob
 
 // interface with strategy for mob
 interface Strategy {

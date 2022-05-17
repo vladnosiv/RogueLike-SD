@@ -2,7 +2,6 @@ package model
 
 import model.actions.*
 import model.actors.MainCharacter
-import model.actors.Mob
 import model.items.Sword
 
 // the class that stores the environment

@@ -1,4 +1,4 @@
-package model.actors
+package model.actors.mobs.strategies
 
 import model.Environment
 
