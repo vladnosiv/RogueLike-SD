@@ -26,7 +26,7 @@ abstract class Mob(position: Position, hp: Int, power: Int, val keepExp: Int, va
         }
     }
 
-    protected fun makeTypeSpecificAction(): List<Action> = listOf()
+    protected open fun makeTypeSpecificAction(): List<Action> = listOf()
 
     fun makeMove(): List<Action> {
         val actions = makeTypeSpecificAction().toMutableList()

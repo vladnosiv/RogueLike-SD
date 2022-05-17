@@ -18,6 +18,8 @@ class EnvironmentConfig(lvl: Int) {
     val mobConfigs = listOf(
         MobConfig(MobType.ZOMBIE, Position(10, 10), 100, 0, 1, StrategyType.PASSIVE),
         MobConfig(MobType.SKELETON, Position(20, 20), 1, 0, 1, StrategyType.AGGRESSIVE),
-        MobConfig(MobType.BIG_ZOMBIE, Position(25, 25), 1, 0, 1, StrategyType.FEARFUL)
+        MobConfig(MobType.BIG_ZOMBIE, Position(25, 25), 1, 0, 1, StrategyType.FEARFUL),
+
+        MobConfig(MobType.POISONOUS_MOLD, Position(22, 22), 1, 0, 1, StrategyType.PASSIVE),
     )
 }

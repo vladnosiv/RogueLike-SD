@@ -65,7 +65,8 @@ enum class MobType {
                 config.hp,
                 config.power,
                 config.keepExp,
-                config.strategy.build(environment)
+                config.strategy.build(environment),
+                0.1
             )
         }
     };
