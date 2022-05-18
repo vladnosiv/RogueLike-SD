@@ -61,17 +61,32 @@ object TileAnimation {
     object Characters {
         val Knight = CharacterSprite(
             getAnimation("knight_f_idle_anim"),
-            getAnimation("knight_f_run_anim")
+            getAnimation("knight_f_run_anim"),
         )
 
         val OrcWarrior = CharacterSprite(
             getAnimation("orc_warrior_idle_anim"),
-            getAnimation("orc_warrior_run_anim")
+            getAnimation("orc_warrior_run_anim"),
+        )
+
+        val MaskedOrc = CharacterSprite(
+            getAnimation("masked_orc_idle_anim"),
+            getAnimation("masked_orc_run_anim"),
         )
 
         val Wizard = CharacterSprite(
             getAnimation("wizzard_f_idle_anim"),
-            getAnimation("wizzard_f_run_anim")
+            getAnimation("wizzard_f_run_anim"),
+        )
+
+        val Swampy = CharacterSprite(
+            getAnimation("swampy_idle_anim"),
+            getAnimation("swampy_run_anim"),
+        )
+
+        val Skeleton = CharacterSprite(
+            getAnimation("skelet_idle_anim"),
+            getAnimation("skelet_run_anim"),
         )
 
         val Zombie = CharacterSprite(
@@ -79,9 +94,24 @@ object TileAnimation {
             getAnimation("zombie_run_anim"),
         )
 
+        val BigZombie = CharacterSprite(
+            getAnimation("big_zombie_idle_anim"),
+            getAnimation("big_zombie_run_anim"),
+        )
+
         val Necromancer = CharacterSprite(
             getAnimation("necromancer_idle_anim"),
             getAnimation("necromancer_run_anim"),
+        )
+
+        val Lizard = CharacterSprite(
+            getAnimation("lizard_m_idle_anim"),
+            getAnimation("lizard_m_run_anim"),
+        )
+
+        val Chort = CharacterSprite(
+            getAnimation("chort_idle_anim"),
+            getAnimation("chort_run_anim"),
         )
     }
 

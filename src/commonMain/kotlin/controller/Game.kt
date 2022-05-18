@@ -70,7 +70,7 @@ class Game(private val ui: view.UI,
                 is HeroChangedDirection -> heroUIRepr.turn(viewDirection(action.direction))
                 is HeroAttacked         -> heroUIRepr.hit()
                 is MobCreated           -> {
-                    mobsUIReprs.put(action.actor, ui.createMobRepr())
+                    mobsUIReprs.put(action.actor, ui.createMobRepr(viewMobType(action.actor.type)))
                     mobsUIReprs.get(action.actor)?.place(action.position.x, action.position.y)
                 }
                 is MobAttacked          -> mobsUIReprs.get(action.actor)?.hit()
@@ -116,6 +116,18 @@ class Game(private val ui: view.UI,
         return when (itemType) {
             model.items.ItemType.SWORD -> view.ItemType.REGULAR_SWORD
             else                       -> view.ItemType.NONE
+        }
+    }
+
+    private fun viewMobType(mobType: model.actors.mobs.MobType): view.MobType {
+        return when (mobType) {
+            model.actors.mobs.MobType.ZOMBIE         -> view.MobType.ORC
+            model.actors.mobs.MobType.ZOMBIE_IN_MASK -> view.MobType.MASKED_ORC
+            model.actors.mobs.MobType.SKELETON       -> view.MobType.SKELETON
+            model.actors.mobs.MobType.DRAGON         -> view.MobType.DRAGON
+            model.actors.mobs.MobType.BIG_ZOMBIE     -> view.MobType.BIG_ZOMBIE
+            model.actors.mobs.MobType.POISONOUS_MOLD -> view.MobType.POISONOUS_MOLD
+            else                                     -> view.MobType.CHORT
         }
     }
 }
