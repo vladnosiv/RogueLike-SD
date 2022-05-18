@@ -11,7 +11,7 @@ class ConfusedStrategy(override val environment: Environment) : Strategy {
     override val type: StrategyType
         get() = StrategyType.CONFUSED
 
-    override fun makeAct(mob: Mob): List<Action> {
+    override fun strategyAct(mob: Mob): List<Action> {
         val mobPos = mob.position
 
         for (direction in Direction.values().shuffled()) {
