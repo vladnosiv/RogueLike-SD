@@ -1,17 +1,20 @@
 package model
 
 import model.actors.MainCharacter
-import model.actors.Mob
+import model.actors.mobs.Mob
+import model.actors.mobs.MobConfig
 import model.effects.EffectFactory
 import model.map.Map
 
 //keeps all info about game world
-class Environment(var map: Map, var mainCharacter: MainCharacter) {
-    lateinit var mobs: MutableList<Mob>
+class Environment(var map: Map, var mainCharacter: MainCharacter, mobConfigs: List<MobConfig>) {
     val timer = Timer()
     val effectFactory: EffectFactory = EffectFactory(this)
+    val mobs = mutableListOf<Mob>()
 
-    fun initMobs(mobs: List<Mob>) {
-        this.mobs = mobs.toMutableList()
+    init {
+        for (config in mobConfigs) {
+            mobs.add(config.type.build(config, this))
+        }
     }
 }

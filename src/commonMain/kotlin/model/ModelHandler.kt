@@ -106,7 +106,8 @@ class ModelHandler {
             }
             is MobKilled -> {
                 logic.environment.mobs.remove(action.mob)
-                logic.environment.map.getTile(action.mob.position).actor = null
+                val tile = logic.environment.map.getTile(action.mob.position)
+                tile.actor = null
 
                 val hero = logic.environment.mainCharacter
 
@@ -120,6 +121,10 @@ class ModelHandler {
 
                 tile.item = null
 
+                emptyList()
+            }
+            is MobCreated -> {
+                logic.environment.mobs.add(action.actor)
                 emptyList()
             }
             else -> emptyList()

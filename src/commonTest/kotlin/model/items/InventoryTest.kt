@@ -2,11 +2,8 @@ package model.items
 
 import model.Position
 import model.actors.MainCharacter
-import model.actors.Mob
-import model.Direction
 import model.map.FloorMapGenerator
 import model.map.MapGeneratorConfig
-import kotlin.collections.Map
 import kotlin.test.*
 
 class InventoryTest {

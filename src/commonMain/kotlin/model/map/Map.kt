@@ -1,13 +1,12 @@
 package model.map
 
-import model.Direction
 import model.Position
 import model.actions.Action
 import model.actions.HeroPlaced
 import model.actions.ItemCreated
 import model.actions.MobCreated
 import model.actors.MainCharacter
-import model.actors.Mob
+import model.actors.mobs.Mob
 import model.items.Item
 
 // class that stores a map of tiles

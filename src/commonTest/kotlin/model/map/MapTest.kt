@@ -2,7 +2,6 @@ package model.map
 
 import model.Position
 import model.actors.MainCharacter
-import model.actors.Mob
 import model.Direction
 import kotlin.test.*
 

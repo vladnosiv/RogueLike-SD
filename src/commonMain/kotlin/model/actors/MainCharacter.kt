@@ -34,6 +34,7 @@ class MainCharacter(position: Position, hp: Int, power: Int, var exp: Int) : Act
         }
 
         actions.addAll(changeEquippedStatus(pos))
+        inHand = pos
         return actions
     }
 
