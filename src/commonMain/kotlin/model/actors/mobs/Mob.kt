@@ -11,6 +11,7 @@ abstract class Mob(position: Position, hp: Int, power: Int, val keepExp: Int, va
     Actor(position, hp, power) {
     abstract val type: MobType
     var direction = Direction.RIGHT
+    val initialHp = hp
 
     private fun applyMove(direction: Direction): List<Action> {
         return if (this.direction != direction) {

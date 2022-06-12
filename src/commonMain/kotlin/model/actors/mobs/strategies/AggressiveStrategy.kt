@@ -11,7 +11,7 @@ class AggressiveStrategy(override val environment: Environment) : Strategy {
     override val type: StrategyType
         get() = StrategyType.AGGRESSIVE
 
-    override fun makeAct(mob: Mob): List<Action> {
+    override fun strategyAct(mob: Mob): List<Action> {
         val mobPos = mob.position
         val heroPos = environment.mainCharacter.position
 

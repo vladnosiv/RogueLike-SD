@@ -9,7 +9,7 @@ class PassStrategy(override val environment: Environment) : Strategy {
     override val type: StrategyType
         get() = StrategyType.PASSIVE
 
-    override fun makeAct(mob: Mob): List<Action> {
+    override fun strategyAct(mob: Mob): List<Action> {
         return emptyList()
     }
 }
