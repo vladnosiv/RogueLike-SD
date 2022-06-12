@@ -64,8 +64,8 @@ class UI(camera: Camera) {
 
     fun createHeroRepr() = createActorRepr(TileAnimation.Characters.Knight)
 
-    fun createMobRepr(): ActorEventHandler {
-        var mobRepr = createActorRepr(TileAnimation.Characters.OrcWarrior)
+    fun createMobRepr(mobType: MobType): ActorEventHandler {
+        var mobRepr = createActorRepr(mobType.characterSprite())
         mobRepr.equipItem(ItemType.AXE)
         return mobRepr
     }
