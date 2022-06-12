@@ -1,35 +1,20 @@
 package model
 
-// the class that stores the environment
-class Environment(
-    generator: MapGenerator,
-    mainCharacterConfig: MainCharacterConfig
-) {
-    var map = generator.genMap()
-    var mainCharacter = MainCharacter(mainCharacterConfig.position, mainCharacterConfig.hp, mainCharacterConfig.exp)
-    val mobs = mutableListOf<Mob>()
+import model.actors.MainCharacter
+import model.actors.mobs.Mob
+import model.actors.mobs.MobConfig
+import model.effects.EffectFactory
+import model.map.Map
+
+//keeps all info about game world
+class Environment(var map: Map, var mainCharacter: MainCharacter, mobConfigs: List<MobConfig>) {
     val timer = Timer()
+    val effectFactory: EffectFactory = EffectFactory(this)
+    val mobs = mutableListOf<Mob>()
 
     init {
-        map.getTile(mainCharacterConfig.position).actor = mainCharacter
-    }
-
-    // returns true if the main character can move in the move direction, otherwise false
-    fun canMainCharacterMove(move: Move): Boolean {
-        val newPosition = mainCharacter.position + move
-        return map.isPositionOnField(newPosition) && map.getTile(newPosition).type.isPassable()
-    }
-
-    // moves main character
-    fun mainCharacterMove(move: Move) {
-        assert(canMainCharacterMove(move))
-        map.getTile(mainCharacter.position).actor = null
-        mainCharacter.position += move
-        map.getTile(mainCharacter.position).actor = mainCharacter
-    }
-
-    // going to the next tick
-    fun tick() {
-        timer.tick()
+        for (config in mobConfigs) {
+            mobs.add(config.type.build(config, this))
+        }
     }
 }
