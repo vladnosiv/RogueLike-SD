@@ -42,16 +42,15 @@ class ModelLogic {
 
         val tile = environment.map.getTile(position + direction)
 
-        if (tile.isEmpty()) {
+        return if (tile.isEmpty()) {
             val actions = environment.map.moveActor(position, position + direction).toMutableList()
             actions.addAll(environment.mainCharacter.makeMove(direction))
-            return actions
+            actions
         } else {
-//            val actions = environment.map.moveActor(position, position + direction).toMutableList()
             val actions = mutableListOf<Action>()
             actions.addAll(environment.mainCharacter.attack(direction))
 
-            return actions
+            actions
         }
     }
 
