@@ -1,8 +1,7 @@
 package model
 
 import model.actions.*
-import model.actors.MainCharacter
-import model.items.Sword
+import model.actors.mobs.DefaultMobFactory
 
 // the class that stores the environment
 class ModelLogic {
@@ -14,45 +13,16 @@ class ModelLogic {
 
         lvl = 1
         val environConfig = EnvironmentConfig(lvl)
-        val mainCharacterConfig = environConfig.mainCharacterConfig
-        val map = environConfig.generator.genMap()
 
-        for ((pos, item) in environConfig.items) {
-            actions.addAll(map.createItem(pos, item))
-        }
+        val builder = EnvironmentBuilder(DefaultMobFactory())
+            .registerGenerator(environConfig.generator)
+            .addMainCharacter(environConfig.mainCharacterConfig)
+            .addMobs(*environConfig.mobConfigs.toTypedArray())
+            .addItems(*environConfig.items.toTypedArray())
 
-        val mainCharacter = MainCharacter(
-            mainCharacterConfig.position,
-            mainCharacterConfig.hp,
-            mainCharacterConfig.power,
-            mainCharacterConfig.exp
-        )
+        environment = builder.generate()
 
-        actions.let {
-            it.addAll(mainCharacter.addItem(Sword()))
-            it.addAll(mainCharacter.equip(0))
-        }
-
-        actions.addAll(map.createMainCharacter(mainCharacterConfig.position, mainCharacter))
-        actions.addAll(
-            listOf(
-                MapChanged(map.field),
-                HeroChangedDirection(mainCharacterConfig.direction),
-                HeroHPChanged(mainCharacterConfig.hp, mainCharacterConfig.hp)
-            )
-        )
-
-        val mobConfigs = environConfig.mobConfigs
-
-        environment = Environment(
-            map,
-            mainCharacter,
-            mobConfigs
-        )
-
-        for (mob in environment.mobs) {
-            actions.addAll(map.createMob(mob.position, mob))
-        }
+        actions.addAll(builder.getActions())
 
         return actions
     }

@@ -3,8 +3,8 @@ package model.actors.mobs
 import model.Environment
 
 class DefaultMobFactory : AbstractMobFactory {
-    override fun createMob(type: MobType, config: MobConfig, environment: Environment): Mob {
-        when (type) {
+    override fun createMob(config: MobConfig, environment: Environment): Mob {
+        when (config.type) {
             MobType.ZOMBIE -> return Zombie(
                 config.position,
                 config.hp,
