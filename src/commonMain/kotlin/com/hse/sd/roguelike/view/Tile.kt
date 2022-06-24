@@ -1,7 +1,5 @@
 package com.hse.sd.roguelike.view
 
-import com.soywiz.korge.view.SpriteAnimation
-
 /**
  * Обертка для хранения тайла с позицией на карте и спрайтом
  */

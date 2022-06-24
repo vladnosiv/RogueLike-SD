@@ -42,7 +42,7 @@ class EnvironmentBuilder(private val mobFactory: AbstractMobFactory) {
     fun generate(): Environment {
         assert(!isGenerated)
 
-        val map = generator.genMap()
+        val map = generator.generateMap()
 
         for ((pos, item) in itemConfigs) {
             actions.addAll(map.createItem(pos, item))

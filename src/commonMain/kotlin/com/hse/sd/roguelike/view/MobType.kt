@@ -1,7 +1,7 @@
 package com.hse.sd.roguelike.view
 
-import com.hse.sd.roguelike.view.sprites.TileAnimation
 import com.hse.sd.roguelike.view.sprites.CharacterSprite
+import com.hse.sd.roguelike.view.sprites.TileAnimation
 
 
 enum class MobType {

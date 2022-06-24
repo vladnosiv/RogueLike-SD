@@ -2,7 +2,6 @@ package com.hse.sd.roguelike.model.map
 
 import model.Position
 import model.actors.MainCharacter
-import com.hse.sd.roguelike.model.Direction
 import kotlin.test.*
 
 class MapTest {
@@ -10,7 +9,7 @@ class MapTest {
     private fun generateFlat(height: Int, width: Int): Map {
         val config = MapGeneratorConfig(height, width)
         val gen = FloorMapGenerator(config)
-        return gen.genMap()
+        return gen.generateMap()
     }
 
     @Test

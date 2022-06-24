@@ -30,7 +30,7 @@ class MainCharacter(position: Position, hp: Int, power: Int, var exp: Int) : Act
             return emptyList()
         }
 
-        if(inHand != null) {
+        if (inHand != null) {
             actions.addAll(changeEquippedStatus(inHand!!))
         }
 
@@ -83,7 +83,7 @@ class MainCharacter(position: Position, hp: Int, power: Int, var exp: Int) : Act
         )
     }
 
-    fun attack(direction: com.hse.sd.roguelike.model.Direction): List<Action> {
+    fun attack(direction: Direction): List<Action> {
         return if (this.direction != direction) {
             this.direction = direction
             listOf(

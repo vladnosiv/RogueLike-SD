@@ -1,7 +1,7 @@
 package com.hse.sd.roguelike.model.actors.mobs
 
-import com.hse.sd.roguelike.model.Position
 import com.hse.sd.roguelike.model.Direction
+import com.hse.sd.roguelike.model.Position
 import com.hse.sd.roguelike.model.actions.*
 import com.hse.sd.roguelike.model.actors.Actor
 import com.hse.sd.roguelike.model.actors.mobs.strategies.Strategy

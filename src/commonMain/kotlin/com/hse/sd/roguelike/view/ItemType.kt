@@ -1,7 +1,7 @@
 package com.hse.sd.roguelike.view
 
-import com.soywiz.korge.view.SpriteAnimation
 import com.hse.sd.roguelike.view.sprites.TileAnimation
+import com.soywiz.korge.view.SpriteAnimation
 
 
 enum class ItemType {

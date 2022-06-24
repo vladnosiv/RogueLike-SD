@@ -5,7 +5,7 @@ import com.hse.sd.roguelike.model.actors.mobs.DefaultMobFactory
 
 // the class that stores the environment
 class ModelLogic {
-    lateinit var environment: com.hse.sd.roguelike.model.Environment
+    lateinit var environment: Environment
     var lvl: Int = 0
 
     fun newGame(): List<Action> {
@@ -14,7 +14,7 @@ class ModelLogic {
         lvl = 1
         val environConfig = EnvironmentConfig(lvl)
 
-        val builder = com.hse.sd.roguelike.model.EnvironmentBuilder(DefaultMobFactory())
+        val builder = EnvironmentBuilder(DefaultMobFactory())
             .registerGenerator(environConfig.generator)
             .addMainCharacter(environConfig.mainCharacterConfig)
             .addMobs(*environConfig.mobConfigs.toTypedArray())
@@ -28,14 +28,14 @@ class ModelLogic {
     }
 
     // returns true if the main character can move in the move direction, otherwise false
-    fun canMainCharacterMove(direction: com.hse.sd.roguelike.model.Direction): Boolean {
+    fun canMainCharacterMove(direction: Direction): Boolean {
         val newPosition = environment.mainCharacter.position + direction
         return environment.map.isPositionOnField(newPosition) &&
                 environment.map.getTile(newPosition).type.isPassable()
     }
 
     // moves main character
-    fun mainCharacterMove(direction: com.hse.sd.roguelike.model.Direction): List<Action> {
+    fun mainCharacterMove(direction: Direction): List<Action> {
         assert(canMainCharacterMove(direction))
 
         val position = environment.mainCharacter.position

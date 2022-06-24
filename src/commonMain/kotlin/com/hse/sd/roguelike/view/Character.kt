@@ -1,15 +1,16 @@
 package com.hse.sd.roguelike.view
 
+import com.hse.sd.roguelike.view.sprites.CharacterSprite
+import com.hse.sd.roguelike.view.sprites.TileAnimation
+import com.hse.sd.roguelike.view.sprites.Weapon
 import com.soywiz.klock.milliseconds
-import com.soywiz.kmem.toInt
-import com.soywiz.korge.animate.*
+import com.soywiz.korge.animate.animateParallel
 import com.soywiz.korge.view.*
 import com.soywiz.korge.view.tween.moveTo
 import com.soywiz.korge.view.tween.rotateTo
-import com.soywiz.korma.geom.*
-import com.hse.sd.roguelike.view.sprites.TileAnimation
-import com.hse.sd.roguelike.view.sprites.CharacterSprite
-import com.hse.sd.roguelike.view.sprites.Weapon
+import com.soywiz.korma.geom.degrees
+import com.soywiz.korma.geom.minus
+import com.soywiz.korma.geom.plus
 
 
 class Character(
@@ -26,9 +27,10 @@ class Character(
     private var x = 0
     private var y = 0
     private var currentDirection = Direction.RIGHT
-    private var onMap = true;
+    private var onMap = true
 
-    @Volatile private var isMoving = false
+    @Volatile
+    private var isMoving = false
 
     fun setWeapon(newWeapon: ItemType) {
         while (isMoving) {
@@ -39,7 +41,8 @@ class Character(
     }
 
     fun removeWeapon() {
-        while (isMoving) { }
+        while (isMoving) {
+        }
 
         weapon.sprite = TileAnimation.UI.Transparent
         weaponSprite.playAnimation(weapon.sprite)
@@ -129,14 +132,14 @@ class Character(
                 Direction.RIGHT -> Direction.UP_RIGHT
                 Direction.DOWN_LEFT -> Direction.UP_LEFT
                 Direction.DOWN_RIGHT -> Direction.UP_RIGHT
-                else                 -> currentDirection
+                else -> currentDirection
             }
             Direction.DOWN -> when (currentDirection) {
                 Direction.LEFT -> Direction.DOWN_LEFT
                 Direction.RIGHT -> Direction.DOWN_RIGHT
                 Direction.UP_LEFT -> Direction.DOWN_LEFT
                 Direction.UP_RIGHT -> Direction.DOWN_RIGHT
-                else               -> currentDirection
+                else -> currentDirection
             }
             else -> direction
         }
@@ -157,7 +160,8 @@ class Character(
     }
 
     fun remove() {
-        while (isMoving) { }
+        while (isMoving) {
+        }
 
         characterSprite.playAnimation(TileAnimation.UI.Transparent)
         removeWeapon()

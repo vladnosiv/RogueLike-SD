@@ -8,7 +8,7 @@ import com.hse.sd.roguelike.model.map.Map
 
 //keeps all info about game world
 class Environment(var map: Map, var mainCharacter: MainCharacter) {
-    val timer = com.hse.sd.roguelike.model.Timer()
+    val timer = Timer()
     val effectFactory: EffectFactory = EffectFactory(this)
 
     val mobs = mutableListOf<Mob>()

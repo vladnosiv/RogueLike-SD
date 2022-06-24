@@ -15,7 +15,7 @@ class ModelHandler {
     }
 
     // handles move action
-    fun onMove(direction: com.hse.sd.roguelike.model.Direction) {
+    fun onMove(direction: Direction) {
         if (logic.canMainCharacterMove(direction) && canMove) {
             actions.addAll(logic.mainCharacterMove(direction))
             canMove = false
@@ -79,7 +79,7 @@ class ModelHandler {
     private fun handleAction(action: Action): List<Action> {
         return when (action) { // TODO("Other actions")
             is MobMoved -> {
-                val direction = com.hse.sd.roguelike.model.Direction(action.dx, action.dy)
+                val direction = Direction(action.dx, action.dy)
                 val pos = action.actor.position
                 logic.environment.map.moveActor(pos - direction, pos)
             }

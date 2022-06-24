@@ -2,37 +2,37 @@ package com.hse.sd.roguelike.view
 
 
 enum class Direction {
-	UP {
-		override fun side() = UP
-	},
+    UP {
+        override fun side() = UP
+    },
 
-	UP_LEFT {
-		override fun side() = LEFT
-	},
+    UP_LEFT {
+        override fun side() = LEFT
+    },
 
-	UP_RIGHT {
-		override fun side() = RIGHT
-	},
+    UP_RIGHT {
+        override fun side() = RIGHT
+    },
 
-	DOWN {
-		override fun side() = DOWN
-	},
+    DOWN {
+        override fun side() = DOWN
+    },
 
-	DOWN_LEFT {
-		override fun side() = LEFT
-	},
+    DOWN_LEFT {
+        override fun side() = LEFT
+    },
 
-	DOWN_RIGHT {
-		override fun side() = RIGHT
-	},
+    DOWN_RIGHT {
+        override fun side() = RIGHT
+    },
 
-	LEFT {
-		override fun side() = LEFT
-	},
+    LEFT {
+        override fun side() = LEFT
+    },
 
-	RIGHT {
-		override fun side() = RIGHT
-	};
+    RIGHT {
+        override fun side() = RIGHT
+    };
 
-	abstract fun side(): Direction
+    abstract fun side(): Direction
 }

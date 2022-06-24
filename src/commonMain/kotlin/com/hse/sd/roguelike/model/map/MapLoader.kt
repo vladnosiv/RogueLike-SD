@@ -20,7 +20,7 @@ class MapLoader(levelName: String) : MapGenerator {
             .mapIndexed { x, it -> it.mapIndexed { y, char -> Tile(tiles[char]!!, x, y) }.toList() }.toList()
     }
 
-    override fun genMap(): Map {
+    override fun generateMap(): Map {
         return Map(field)
     }
 }

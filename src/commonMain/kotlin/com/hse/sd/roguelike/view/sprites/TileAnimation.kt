@@ -15,11 +15,13 @@ object TileAnimation {
         resourcesVfs["0x72_DungeonTilesetII_v1.4/0x72_DungeonTilesetII_v1.4.png"].readBitmap()
     }
 
-    private data class SpritePosition(val spriteWidth: Int,
-                                      val spriteHeight: Int,
-                                      val marginTop: Int,
-                                      val marginLeft: Int,
-                                      val columns: Int = 1)
+    private data class SpritePosition(
+        val spriteWidth: Int,
+        val spriteHeight: Int,
+        val marginTop: Int,
+        val marginLeft: Int,
+        val columns: Int = 1
+    )
 
     private val spriteNameToPosition = runBlocking {
         resourcesVfs["0x72_DungeonTilesetII_v1.4/tiles_list_v1.4"]
@@ -28,7 +30,8 @@ object TileAnimation {
             .map { str -> str.split(' ').filter { it.isNotEmpty() } }
             .map { s ->
                 val columns = if (s.size > 5) s[5].toInt() else 1
-                s[0] to SpritePosition(s[3].toInt(), s[4].toInt(), s[2].toInt(), s[1].toInt(), columns) }
+                s[0] to SpritePosition(s[3].toInt(), s[4].toInt(), s[2].toInt(), s[1].toInt(), columns)
+            }
             .toMap()
     }
 
@@ -42,13 +45,13 @@ object TileAnimation {
     )
 
     object UI {
-        val FullHeart  = getAnimation("ui_heart_full")
-        val HalfHeart  = getAnimation("ui_heart_half")
+        val FullHeart = getAnimation("ui_heart_full")
+        val HalfHeart = getAnimation("ui_heart_half")
         val EmptyHeart = getAnimation("ui_heart_empty")
 
-        val RedButtonOff  = getAnimation("red_button_off")
+        val RedButtonOff = getAnimation("red_button_off")
         val BlueButtonOff = getAnimation("blue_button_off")
-        val Transparent   = getAnimation("transparent")
+        val Transparent = getAnimation("transparent")
     }
 
     object Map {
@@ -117,8 +120,8 @@ object TileAnimation {
 
     object Weapons {
         val RegularSword = Weapon(getAnimation("weapon_regular_sword"))
-        val Hammer       = Weapon(getAnimation("weapon_hammer"))
-        val Axe          = Weapon(getAnimation("weapon_axe"))
-        val MagicStick   = Weapon(getAnimation("weapon_red_magic_staff"))
+        val Hammer = Weapon(getAnimation("weapon_hammer"))
+        val Axe = Weapon(getAnimation("weapon_axe"))
+        val MagicStick = Weapon(getAnimation("weapon_red_magic_staff"))
     }
 }

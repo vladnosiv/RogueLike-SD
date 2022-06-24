@@ -1,8 +1,8 @@
 package com.hse.sd.roguelike.view
 
+import com.hse.sd.roguelike.view.sprites.TileAnimation
 import com.soywiz.korge.view.*
 import com.soywiz.korma.geom.degrees
-import com.hse.sd.roguelike.view.sprites.TileAnimation
 
 
 class StatusBar(

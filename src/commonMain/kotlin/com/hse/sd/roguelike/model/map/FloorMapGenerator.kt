@@ -2,7 +2,7 @@ package com.hse.sd.roguelike.model.map
 
 // a class that generates a field without walls of a given size
 class FloorMapGenerator(private val config: MapGeneratorConfig) : MapGenerator {
-    override fun genMap(): Map {
+    override fun generateMap(): Map {
         val height = config.height
         val width = config.width
         return Map(List(width) { x ->

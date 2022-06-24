@@ -15,7 +15,7 @@ class Confusion(environment: com.hse.sd.roguelike.model.Environment) : AbstractE
 
     override fun onStart(): List<Action> {
         mob.strategy = ConfusedStrategy(environment)
-        environment.timer.addTask (100) {
+        environment.timer.addTask(100) {
             onFinish()
         }
         return listOf(
@@ -38,7 +38,7 @@ class Confusion(environment: com.hse.sd.roguelike.model.Environment) : AbstractE
 
             prevStrategy = mob.strategy
 
-            environment.timer.addTask (0) {
+            environment.timer.addTask(0) {
                 onStart()
             }
         }

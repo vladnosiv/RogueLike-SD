@@ -29,7 +29,7 @@ class PoisonousMold(
         return if (number < probability) {
             val actions = mutableListOf<Action>()
             for (direction in com.hse.sd.roguelike.model.Direction.values()) {
-                if(map.canStep(position + direction)) {
+                if (map.canStep(position + direction)) {
                     val newMob = this.replicate()
                     newMob.position = position + direction
                     actions.addAll(map.createMob(position + direction, newMob))
