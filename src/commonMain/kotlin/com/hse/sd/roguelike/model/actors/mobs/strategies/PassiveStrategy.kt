@@ -5,7 +5,7 @@ import com.hse.sd.roguelike.model.actions.Action
 import com.hse.sd.roguelike.model.actors.mobs.Mob
 
 //doesn't moves
-class PassStrategy(override val environment: Environment) : Strategy {
+class PassiveStrategy(override val environment: Environment) : Strategy {
     override val type: StrategyType
         get() = StrategyType.PASSIVE
 

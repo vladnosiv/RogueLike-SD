@@ -21,5 +21,6 @@ class EnvironmentConfig(lvl: Int) {
         MobConfig(MobType.BIG_ZOMBIE, Position(25, 25), 1, 0, 1, StrategyType.FEARFUL),
 
         MobConfig(MobType.POISONOUS_MOLD, Position(22, 22), 1, 0, 1, StrategyType.PASSIVE),
+        MobConfig(MobType.DRAGON, Position(24, 24), 1, 0, 1, StrategyType.PASSIVE),
     )
 }

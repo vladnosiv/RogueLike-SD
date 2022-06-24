@@ -67,9 +67,9 @@ class EnvironmentBuilder(private val mobFactory: AbstractMobFactory) {
 
         val mobs = mobConfigs.map { mobFactory.createMob(it, environment) }
 
-        environment.mobs.addAll(mobs)
+//        environment.mobs.addAll(mobs)
 
-        for (mob in environment.mobs) {
+        for (mob in mobs) {
             actions.addAll(map.createMob(mob.position, mob))
         }
 

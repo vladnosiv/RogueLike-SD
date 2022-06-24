@@ -32,12 +32,17 @@ abstract class Mob(position: Position, hp: Int, power: Int, val keepExp: Int, va
     fun makeMove(): List<Action> {
         val actions = makeTypeSpecificAction().toMutableList()
 
-        actions.addAll(strategy.makeAct(this))
-
-        for (action in actions) {
+        val strategyActions = strategy.makeAct(this)
+        var k = 0
+        for (action in strategyActions) {
             if (action is MobMoved) {
-                applyMove(action.direction)
+                actions.addAll(applyMove(action.direction))
+                k++
             }
+        }
+
+        if(k > 1) {
+            throw Exception()
         }
         return actions
     }

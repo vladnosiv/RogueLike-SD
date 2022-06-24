@@ -5,7 +5,7 @@ import com.hse.sd.roguelike.model.Environment
 enum class StrategyType {
     PASSIVE {
         override fun build(environment: Environment): Strategy {
-            return PassStrategy(environment)
+            return PassiveStrategy(environment)
         }
     },
     FEARFUL {

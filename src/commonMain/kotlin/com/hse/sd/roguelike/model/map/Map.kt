@@ -18,6 +18,7 @@ data class Map(val field: List<List<Tile>>) {
         assert(isPositionOnField(from))
         assert(isPositionOnField(to))
 
+        println("${from.toString()} ${to.toString()}")
         val fromTile = getTile(from)
         val toTile = getTile(to)
 
