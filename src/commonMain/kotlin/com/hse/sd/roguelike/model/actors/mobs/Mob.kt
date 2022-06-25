@@ -4,6 +4,8 @@ import com.hse.sd.roguelike.model.Direction
 import com.hse.sd.roguelike.model.Position
 import com.hse.sd.roguelike.model.actions.*
 import com.hse.sd.roguelike.model.actors.Actor
+import com.hse.sd.roguelike.model.actors.mobs.states.NormalState
+import com.hse.sd.roguelike.model.actors.mobs.states.State
 import com.hse.sd.roguelike.model.actors.mobs.strategies.Strategy
 
 // class that stores information about a mob
@@ -12,6 +14,12 @@ abstract class Mob(position: Position, hp: Int, power: Int, val keepExp: Int, va
     abstract val type: MobType
     var direction = Direction.RIGHT
     val initialHp = hp
+
+    var state: State
+
+    init {
+        state = NormalState(this)
+    }
 
     private fun applyMove(direction: Direction): List<Action> {
         return if (this.direction != direction) {
@@ -32,18 +40,16 @@ abstract class Mob(position: Position, hp: Int, power: Int, val keepExp: Int, va
     fun makeMove(): List<Action> {
         val actions = makeTypeSpecificAction().toMutableList()
 
-        val strategyActions = strategy.makeAct(this)
-        var k = 0
+        state.changeStateIfNeeded()
+
+        val strategyActions = state.makeMove()
+
         for (action in strategyActions) {
             if (action is MobMoved) {
                 actions.addAll(applyMove(action.direction))
-                k++
             }
         }
 
-        if(k > 1) {
-            throw Exception()
-        }
         return actions
     }
 
