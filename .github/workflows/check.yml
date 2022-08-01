@@ -26,7 +26,7 @@ jobs:
     - name: Get dependencies
       run:   |
          if [ "$RUNNER_OS" == "Linux" ]; then
-              apt -y install freeglut3 libopenal1
+              sudo apt -y install freeglut3 libopenal1
          else
               echo "$RUNNER_OS"
          fi
