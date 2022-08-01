@@ -1,9 +1,9 @@
 package com.hse.sd.roguelike.model.items
 
-import model.Position
-import model.actors.MainCharacter
-import model.map.FloorMapGenerator
-import model.map.MapGeneratorConfig
+import com.hse.sd.roguelike.model.Position
+import com.hse.sd.roguelike.model.actors.MainCharacter
+import com.hse.sd.roguelike.model.map.FloorMapGenerator
+import com.hse.sd.roguelike.model.map.MapGeneratorConfig
 import kotlin.test.*
 
 class InventoryTest {
@@ -22,7 +22,7 @@ class InventoryTest {
         val inv = Inventory()
         inv.addItem(Sword())
 
-        val map = FloorMapGenerator(MapGeneratorConfig(5, 5)).genMap()
+        val map = FloorMapGenerator(MapGeneratorConfig(5, 5)).generateMap()
 
         val pos = Position(2, 2)
         val hero = MainCharacter(pos, 100, 1, 100)

@@ -1,7 +1,7 @@
 package com.hse.sd.roguelike.model.map
 
-import model.Position
-import model.actors.MainCharacter
+import com.hse.sd.roguelike.model.Position
+import com.hse.sd.roguelike.model.actors.MainCharacter
 import kotlin.test.*
 
 class MapTest {
