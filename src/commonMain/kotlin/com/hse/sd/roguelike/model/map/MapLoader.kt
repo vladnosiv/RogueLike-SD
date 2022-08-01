@@ -16,8 +16,7 @@ class MapLoader(levelName: String) : MapGenerator {
         val path = LevelHolder.getPathByName(levelName)
         val bufferedReader: BufferedReader = path.toFile().bufferedReader()
         // TODO: FIX TILE POSITION!!!
-        field = bufferedReader.lines().toList()
-            .mapIndexed { x, it -> it.mapIndexed { y, char -> Tile(tiles[char]!!, x, y) }.toList() }.toList()
+        field = bufferedReader.lines().toList().mapIndexed { x, it -> it.mapIndexed { y, char -> Tile(tiles[char]!!, x, y) }.toList() }.toList()
     }
 
     override fun generateMap(): Map {
