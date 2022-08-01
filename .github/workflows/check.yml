@@ -24,6 +24,13 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Get dependencies
-      run: sudo apt-get -y install freeglut3 libopenal1
+      run:   |
+         if [ "$RUNNER_OS" == "Linux" ]; then
+              apt -y install freeglut3 libopenal1
+         else
+              echo "$RUNNER_OS"
+         fi
+      shell: bash
     - name: Build with Gradle
       run: ./gradlew jvmTest
+      
